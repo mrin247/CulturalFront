@@ -6,6 +6,8 @@ import handlooms from "../images/handlooms.png";
 import lifestyles from "../images/lifestyles.png";
 import puja from "../images/puja.png";
 import toys from "../images/toys.png";
+import India from "../images/india-banner.jpg"
+import mahadev from "../images/mahadev.jpg";
 
 export const navData = [
   { url: homeNeeds, text: "Home Needs" },
@@ -37,4 +39,12 @@ export const navData = [
     url: toys,
     text: "Toys & More",
   },
+];
+
+export const bannerData = [
+ 
+  India,
+  mahadev,
+  "https://www.airvistara.com/content/dam/airvistara/global/english/plan-travel/destinations/images/Varanasi-28%20Apr.jpg",
+  "https://www.lotusindiaholidays.com/wp-content/uploads/2018/10/varanasi.jpg?id=1559",
 ];
