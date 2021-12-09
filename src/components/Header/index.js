@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { Button, Stack } from "@mui/material";
+import { Badge, Button, Stack } from "@mui/material";
 
 //ICONS
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
@@ -144,9 +144,18 @@ export const Header = (props) => {
             Medicine
           </StyledButtonText>
           <StyledButtonText variant="text">
-            <ShoppingBasketIcon
-              sx={{ justifyContent: "center", marginRight: "2px" }}
-            />
+            <Badge
+              badgeContent={3}
+              color="secondary"
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+            >
+              <ShoppingBasketIcon
+                sx={{ justifyContent: "center", marginRight: "2px" }}
+              />
+            </Badge>
             Cart
           </StyledButtonText>
           <StyledLoginButton variant="contained">Sign Up</StyledLoginButton>
