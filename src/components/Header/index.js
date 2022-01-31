@@ -15,6 +15,7 @@ import ModeOfTravelIcon from "@mui/icons-material/ModeOfTravel";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
+import { Dialoge } from "../Dialog";
 /**
  * @author
  * @function Header
@@ -97,6 +98,13 @@ const StyledButtonText = styled(Button)(({ theme }) => ({
 }));
 
 export const Header = (props) => {
+  const [open, setOpen] = React.useState(false);
+  const openDialog = () => {
+    setOpen(true);
+  };
+  const closeDialog = () => {
+    setOpen(false);
+  };
   return (
     <AppBar style={{ backgroundColor: "#a9812d" }}>
       <Toolbar>
@@ -158,9 +166,12 @@ export const Header = (props) => {
             </Badge>
             Cart
           </StyledButtonText>
-          <StyledLoginButton variant="contained">Sign Up</StyledLoginButton>
+          <StyledLoginButton variant="contained" onClick={openDialog}>
+            Login
+          </StyledLoginButton>
         </Stack>
       </Toolbar>
+      <Dialoge open={open} onClose={closeDialog} page="login" />
     </AppBar>
   );
 };
