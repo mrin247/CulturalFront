@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
 import { Carousel } from "../../components/Carousel";
+import { Layout } from "../../components/Layout";
 import { NavbarHome } from "../../components/Navbar-Home";
 
 /**
@@ -18,11 +19,10 @@ const useStyle = makeStyles({
 export const HomePage = (props) => {
   const styles = useStyle();
   return (
-    <>
-      <NavbarHome />
+    <Layout>
       <Box className={styles.carousel}>
         <Carousel />
       </Box>
-    </>
+    </Layout>
   );
 };

@@ -17,6 +17,7 @@ const useStyle = makeStyles({
   },
   carousel: {
     marginTop: 5,
+    color: "white",
   },
 });
 

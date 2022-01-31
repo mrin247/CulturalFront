@@ -24,9 +24,9 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import { purple, yellow } from "@mui/material/colors";
+import {  yellow } from "@mui/material/colors";
 import { Dialoge } from "../Dialog";
-import { SignupContent } from "../signup";
+
 /**
  * @author
  * @function Login
