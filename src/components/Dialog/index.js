@@ -22,66 +22,37 @@ import Visibility from "@mui/icons-material/Visibility";
 import Link from "@mui/material/Link";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import { purple, yellow } from "@mui/material/colors";
 import { LoginContent } from "../Login";
+import { SignupContent } from "../signup";
 /**
  * @author
  * @function Login
  **/
 
-const Image = styled("img")(({ theme }) => ({
-  width: "100%",
-  height: "100%",
-}));
-
-const ColorButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(yellow[700]),
-  backgroundColor: yellow[700],
-  "&:hover": {
-    backgroundColor: yellow[800],
-  },
-}));
-
 export const Dialoge = (props) => {
-  const [values, setValues] = React.useState({
-    amount: "",
-    password: "",
-    weight: "",
-    weightRange: "",
-    showPassword: false,
-  });
-
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
   return (
     <Dialog open={props.open} onClose={props.onClose} maxWidth="md">
-      {props.page === "login" ? (
+      {/* {props.page === "login" ? (
         <LoginContent close={props.onClose} />
       ) : props.page === "create" ? (
-        <DialogContent>Create</DialogContent>
+        <SignupContent close={props.onClose} />
       ) : props.page === "forgot" ? (
         <DialogContent>forgot</DialogContent>
       ) : props.page === "reset" ? (
         <DialogContent>reset</DialogContent>
-      ) : null}
+      ) : null} */}
 
-      {/* <DialogContent>
-        <Grid container spacing={2}>
+      
+        {props.page === "login" ? (
+          <LoginContent close={props.onClose} />
+        ) : props.page === "create" ? (
+          <SignupContent close={props.onClose} />
+        ) : props.page === "forgot" ? (
+          <DialogContent>forgot</DialogContent>
+        ) : props.page === "reset" ? (
+          <DialogContent>reset</DialogContent>
+        ) : null}
+        {/* <Grid container spacing={2}>
           <Grid item xs={6}>
             <Image src={loginImage} />
           </Grid>
@@ -193,8 +164,8 @@ export const Dialoge = (props) => {
               </Link>
             </Typography>
           </Grid>
-        </Grid>
-      </DialogContent> */}
+        </Grid> */}
+      
     </Dialog>
   );
 };

@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-import loginImage from "../../images/login.jpg";
+import signupImage from "../../images/signup.jpg";
 import Visibility from "@mui/icons-material/Visibility";
 import Link from "@mui/material/Link";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -24,9 +24,8 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import { purple, yellow } from "@mui/material/colors";
+import { green, purple, yellow } from "@mui/material/colors";
 import { Dialoge } from "../Dialog";
-import { SignupContent } from "../signup";
 /**
  * @author
  * @function Login
@@ -38,10 +37,10 @@ const Image = styled("img")(({ theme }) => ({
 }));
 
 const ColorButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(yellow[700]),
-  backgroundColor: yellow[700],
+  color: theme.palette.getContrastText(green[700]),
+  backgroundColor: green[700],
   "&:hover": {
-    backgroundColor: yellow[800],
+    backgroundColor: green[800],
   },
 }));
 /**
@@ -49,17 +48,29 @@ const ColorButton = styled(Button)(({ theme }) => ({
  * @function LoginContent
  **/
 
-export const LoginContent = (props) => {
+export const SignupContent = (props) => {
   const [values, setValues] = React.useState({
     amount: "",
-    password: "",
+    password: null,
     weight: "",
     weightRange: "",
     showPassword: false,
   });
 
+  const [confirmValues, setConfirmValues] = React.useState({
+    amount: "",
+    confirmPassword: null,
+    weight: "",
+    weightRange: "",
+    showConfirmPassword: false,
+  });
+
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const confirmHandleChange = (prop) => (event) => {
+    setConfirmValues({ ...confirmValues, [prop]: event.target.value });
   };
 
   const handleClickShowPassword = () => {
@@ -69,41 +80,65 @@ export const LoginContent = (props) => {
     });
   };
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
+  const handleClickShowConfirmPassword = () => {
+    setConfirmValues({
+      ...confirmValues,
+      showConfirmPassword: !confirmValues.showConfirmPassword,
+    });
   };
 
-  const [openSignup, setOpenSignup] = React.useState(false);
-  const openSignupDialog = () => {
-    setOpenSignup(true);
-  };
-  const closeSignupDialog = () => {
-    setOpenSignup(false);
-    props.close();
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
   return (
     <DialogContent>
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <Image src={loginImage} />
+          <Image src={signupImage} />
         </Grid>
         <Grid item xs={6}>
-          <Box mt={5} mb={3}>
-            <Box mt={5} mb={5}>
+          <Box mt={3} mb={2}>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <TextField
+                required
+                id="standard-required"
+                label="First Name"
+                variant="standard"
+                color="success"
+              />
+              <TextField
+                required
+                id="standard-required"
+                label="Last Name"
+                variant="standard"
+                color="success"
+              />
+            </Box>
+            <Box mt={2} mb={2}>
+              <TextField
+                required
+                fullWidth
+                id="standard-required"
+                label="Contact Number"
+                variant="standard"
+                color="success"
+              />
+            </Box>
+            <Box mt={2} mb={2}>
               <TextField
                 required
                 fullWidth
                 id="standard-required"
                 label="Email Address"
                 variant="standard"
-                color="secondary"
+                color="success"
               />
             </Box>
-            <Box mt={5} mb={5}>
+            <Box mt={2} mb={2}>
               <FormControl variant="standard" fullWidth>
                 <InputLabel
-                  color="secondary"
+                  color="success"
                   required
                   htmlFor="standard-adornment-password"
                 >
@@ -115,11 +150,11 @@ export const LoginContent = (props) => {
                   type={values.showPassword ? "text" : "password"}
                   value={values.password}
                   onChange={handleChange("password")}
-                  color="secondary"
+                  color="success"
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
-                        color="secondary"
+                        color="success"
                         aria-label="toggle password visibility"
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
@@ -134,17 +169,43 @@ export const LoginContent = (props) => {
                   }
                 />
               </FormControl>
-              <Box mt={1} sx={{ fontSize: "14px" }}>
-                <span>Forgot Password ? </span>
-                <Link
-                  component="button"
-                  onClick={() => alert("/forgot-password")}
-                  underline="hover"
-                  sx={{ color: "#002d68", fontWeight: 600 }}
+            </Box>
+            <Box mt={2} mb={2}>
+              <FormControl variant="standard" fullWidth>
+                <InputLabel
+                  color="success"
+                  required
+                  htmlFor="standard-adornment-password"
                 >
-                  Reset password here
-                </Link>
-              </Box>
+                  Confirm Password
+                </InputLabel>
+                <Input
+                  fullWidth
+                  placeholder="Confirm Password"
+                  color="success"
+                  id="standard-adornment-password"
+                  autoComplete="off"
+                  type={confirmValues.showConfirmPassword ? "text" : "Password"}
+                  value={confirmValues.confirmPassword}
+                  onChange={confirmHandleChange("confirmPassword")}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        color="success"
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowConfirmPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {confirmValues.showConfirmPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "center" }} mb={2}>
               <ColorButton
@@ -152,7 +213,7 @@ export const LoginContent = (props) => {
                 size="medium"
                 sx={{ textTransform: "none" }}
               >
-                Login
+                Create Account
               </ColorButton>
             </Box>
 
@@ -171,7 +232,7 @@ export const LoginContent = (props) => {
             </Box>
             <Box
               sx={{ display: "flex", justifyContent: "space-around" }}
-              mb={12}
+              mb={2}
             >
               <Button sx={{ color: "#002d68", fontWeight: 600 }}>
                 <GoogleIcon />
@@ -184,22 +245,6 @@ export const LoginContent = (props) => {
               </Button>
             </Box>
           </Box>
-          <Typography>
-            Don't have an account ?{" "}
-            <Link
-              component="button"
-              onClick={openSignupDialog}
-              underline="hover"
-              sx={{ color: "green", fontWeight: 600, fontSize: "16px" }}
-            >
-              Create an account
-            </Link>
-            <Dialoge
-              open={openSignup}
-              onClose={closeSignupDialog}
-              page="create"
-            />
-          </Typography>
         </Grid>
       </Grid>
     </DialogContent>
