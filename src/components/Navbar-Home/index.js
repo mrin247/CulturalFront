@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     margin: "65px 130px 0 130px",
     overflowX: "overlay",
+    cursor: "pointer",
   },
   imageContainer: {
     padding: "12px 8px",
@@ -38,7 +39,7 @@ export const NavbarHome = (props) => {
   return (
     <Box className={styles.container}>
       {navData.map((data) => (
-        <Box className={styles.imageContainer}>
+        <Box className={styles.imageContainer} onClick={() => alert(data.text)}>
           <img src={data.url} className={styles.image} />
           <Typography className={styles.text}>{data.text}</Typography>
         </Box>
