@@ -28,6 +28,7 @@ export const HomePage = (props) => {
   };
   return (
     <Layout>
+      <NavbarHome />
       <Box className={styles.carousel}>
         <Carousel />
         <ProductSlide title="Top Products" viewAll={viewAllTopProducts} />

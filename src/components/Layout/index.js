@@ -18,7 +18,6 @@ export const Layout = (props) => {
     <>
       <Box>
         <Header />
-        <NavbarHome />
         {props.children}
       </Box>
     </>

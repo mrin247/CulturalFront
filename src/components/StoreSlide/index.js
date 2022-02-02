@@ -50,7 +50,7 @@ const useStyle = makeStyles({
 export const StoreSlide = (props) => {
   const classes = useStyle();
   return (
-    <Box sx={{ marginTop: 2, background: "#FFFFFF" }}>
+    <Box sx={{ marginTop: 1, background: "#FFFFFF" }}>
       <Box
         sx={{
           display: "flex",

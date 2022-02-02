@@ -4,7 +4,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { Header } from "./components/Header";
 import { ResetPassword } from "./components/Reset-Password";
+import { ArtistsPage } from "./pages/artistsPage";
+import { BlogsPage } from "./pages/blogsPage";
+import { CartPage } from "./pages/cartPage";
 import { HomePage } from "./pages/homePage";
+import { JewelsPage } from "./pages/jewelleryPage";
+import { MedicinePage } from "./pages/medicinePage";
+import { TravelPage } from "./pages/travelPage";
 
 function App() {
   return (
@@ -12,7 +18,7 @@ function App() {
     //   <Header />
     //   <HomePage />
     // </>
-    
+
     <Router>
       <Fragment>
         <Routes>
@@ -33,6 +39,13 @@ function App() {
           </Route> */}
 
           <Route exact path="/" element={<HomePage />} />
+          <Route exact path="/cart" element={<CartPage />} />
+          <Route exact path="/artists" element={<ArtistsPage />} />
+          <Route exact path="/jewelleries" element={<JewelsPage />} />
+          <Route exact path="/travels" element={<TravelPage />} />
+          <Route exact path="/blogs" element={<BlogsPage />} />
+          <Route exact path="/medicines" element={<MedicinePage />} />
+
           <Route
             exact
             path="/reset-password/:resetToken"
