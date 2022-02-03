@@ -89,8 +89,6 @@ const StyledLoginButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-
-
 export const Header = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -102,7 +100,12 @@ export const Header = (props) => {
     setOpen(false);
   };
   return (
-    <AppBar style={{ backgroundColor: "#a9812d" }}>
+    <AppBar position="fixed"
+      sx={{
+        backgroundColor: "#a9812d",
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+      }}
+    >
       <Toolbar>
         <Box
           marginLeft="12%"
@@ -112,197 +115,203 @@ export const Header = (props) => {
         >
           <StyledLogo src="https://www.coolgenerator.com/Data/Textdesign/202112/5c27fc32866f72a8acac2e3d45a0fe55.png" />
         </Box>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search for Bengal"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
-        <Stack spacing={2} direction="row">
-          <Button
-            variant="text"
-            selected={location.pathname === "/artists" ? true : false}
-            sx={
-              location.pathname === "/artists"
-                ? {
-                    textTransform: "none",
-                    color: "black",
-                    borderBottom: "1px solid",
-                    boxShadow: "none",
-                  }
-                : {
-                    textTransform: "none",
-                    color: "#E5E4E4",
-                    "&:hover": {
-                      color: "black",
-                      borderBottom: "1px solid",
-                      boxShadow: "none",
-                    },
-                  }
-            }
-            onClick={() => navigate("/artists")}
-          >
-            <ColorLensIcon
-              sx={{ justifyContent: "center", marginRight: "2px" }}
-            />
-            Artist
-          </Button>
-          <Button
-            variant="text"
-            selected={location.pathname === "/jewelleries" ? true : false}
-            sx={
-              location.pathname === "/jewelleries"
-                ? {
-                    textTransform: "none",
-                    color: "black",
-                    borderBottom: "1px solid",
-                    boxShadow: "none",
-                  }
-                : {
-                    textTransform: "none",
-                    color: "#E5E4E4",
-                    "&:hover": {
-                      color: "black",
-                      borderBottom: "1px solid",
-                      boxShadow: "none",
-                    },
-                  }
-            }
-            onClick={() => navigate("/jewelleries")}
-          >
-            <AutoAwesomeIcon
-              sx={{ justifyContent: "center", marginRight: "2px" }}
-            />
-            Jewellery
-          </Button>
-          <Button
-            variant="text"
-            selected={location.pathname === "/travels" ? true : false}
-            sx={
-              location.pathname === "/travels"
-                ? {
-                    textTransform: "none",
-                    color: "black",
-                    borderBottom: "1px solid",
-                    boxShadow: "none",
-                  }
-                : {
-                    textTransform: "none",
-                    color: "#E5E4E4",
-                    "&:hover": {
-                      color: "black",
-                      borderBottom: "1px solid",
-                      boxShadow: "none",
-                    },
-                  }
-            }
-            onClick={() => navigate("/travels")}
-          >
-            <ModeOfTravelIcon
-              sx={{ justifyContent: "center", marginRight: "2px" }}
-            />
-            Travel
-          </Button>
-          <Button
-            variant="text"
-            selected={location.pathname === "/blogs" ? true : false}
-            sx={
-              location.pathname === "/blogs"
-                ? {
-                    textTransform: "none",
-                    color: "black",
-                    borderBottom: "1px solid",
-                    boxShadow: "none",
-                  }
-                : {
-                    textTransform: "none",
-                    color: "#E5E4E4",
-                    "&:hover": {
-                      color: "black",
-                      borderBottom: "1px solid",
-                      boxShadow: "none",
-                    },
-                  }
-            }
-            onClick={() => navigate("/blogs")}
-          >
-            <HistoryEduIcon
-              sx={{ justifyContent: "center", marginRight: "2px" }}
-            />
-            Blog
-          </Button>
-          <Button
-            variant="text"
-            selected={location.pathname === "/medicines" ? true : false}
-            sx={
-              location.pathname === "/medicines"
-                ? {
-                    textTransform: "none",
-                    color: "black",
-                    borderBottom: "1px solid",
-                    boxShadow: "none",
-                  }
-                : {
-                    textTransform: "none",
-                    color: "#E5E4E4",
-                    "&:hover": {
-                      color: "black",
-                      borderBottom: "1px solid",
-                      boxShadow: "none",
-                    },
-                  }
-            }
-            onClick={() => navigate("/medicines")}
-          >
-            <MedicalServicesIcon
-              sx={{ justifyContent: "center", marginRight: "2px" }}
-            />
-            Medicine
-          </Button>
-          <Button
-            variant="text"
-            selected={location.pathname === "/cart" ? true : false}
-            sx={
-              location.pathname === "/cart"
-                ? {
-                    textTransform: "none",
-                    color: "black",
-                    borderBottom: "1px solid",
-                    boxShadow: "none",
-                  }
-                : {
-                    textTransform: "none",
-                    color: "#E5E4E4",
-                    "&:hover": {
-                      color: "black",
-                      borderBottom: "1px solid",
-                      boxShadow: "none",
-                    },
-                  }
-            }
-            onClick={() => navigate("/cart")}
-          >
-            <Badge
-              badgeContent={3}
-              color="secondary"
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-            >
-              <ShoppingBasketIcon
-                sx={{ justifyContent: "center", marginRight: "2px" }}
+        {location.pathname === "/checkout" ? (
+          <></>
+        ) : (
+          <>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search for Bengal"
+                inputProps={{ "aria-label": "search" }}
               />
-            </Badge>
-            Cart
-          </Button>
-          <StyledLoginButton variant="contained" onClick={openDialog}>
-            Login
-          </StyledLoginButton>
-        </Stack>
+            </Search>
+            <Stack spacing={2} direction="row">
+              <Button
+                variant="text"
+                selected={location.pathname === "/artists" ? true : false}
+                sx={
+                  location.pathname === "/artists"
+                    ? {
+                        textTransform: "none",
+                        color: "black",
+                        borderBottom: "1px solid",
+                        boxShadow: "none",
+                      }
+                    : {
+                        textTransform: "none",
+                        color: "#E5E4E4",
+                        "&:hover": {
+                          color: "black",
+                          borderBottom: "1px solid",
+                          boxShadow: "none",
+                        },
+                      }
+                }
+                onClick={() => navigate("/artists")}
+              >
+                <ColorLensIcon
+                  sx={{ justifyContent: "center", marginRight: "2px" }}
+                />
+                Artist
+              </Button>
+              <Button
+                variant="text"
+                selected={location.pathname === "/jewelleries" ? true : false}
+                sx={
+                  location.pathname === "/jewelleries"
+                    ? {
+                        textTransform: "none",
+                        color: "black",
+                        borderBottom: "1px solid",
+                        boxShadow: "none",
+                      }
+                    : {
+                        textTransform: "none",
+                        color: "#E5E4E4",
+                        "&:hover": {
+                          color: "black",
+                          borderBottom: "1px solid",
+                          boxShadow: "none",
+                        },
+                      }
+                }
+                onClick={() => navigate("/jewelleries")}
+              >
+                <AutoAwesomeIcon
+                  sx={{ justifyContent: "center", marginRight: "2px" }}
+                />
+                Jewellery
+              </Button>
+              <Button
+                variant="text"
+                selected={location.pathname === "/travels" ? true : false}
+                sx={
+                  location.pathname === "/travels"
+                    ? {
+                        textTransform: "none",
+                        color: "black",
+                        borderBottom: "1px solid",
+                        boxShadow: "none",
+                      }
+                    : {
+                        textTransform: "none",
+                        color: "#E5E4E4",
+                        "&:hover": {
+                          color: "black",
+                          borderBottom: "1px solid",
+                          boxShadow: "none",
+                        },
+                      }
+                }
+                onClick={() => navigate("/travels")}
+              >
+                <ModeOfTravelIcon
+                  sx={{ justifyContent: "center", marginRight: "2px" }}
+                />
+                Travel
+              </Button>
+              <Button
+                variant="text"
+                selected={location.pathname === "/blogs" ? true : false}
+                sx={
+                  location.pathname === "/blogs"
+                    ? {
+                        textTransform: "none",
+                        color: "black",
+                        borderBottom: "1px solid",
+                        boxShadow: "none",
+                      }
+                    : {
+                        textTransform: "none",
+                        color: "#E5E4E4",
+                        "&:hover": {
+                          color: "black",
+                          borderBottom: "1px solid",
+                          boxShadow: "none",
+                        },
+                      }
+                }
+                onClick={() => navigate("/blogs")}
+              >
+                <HistoryEduIcon
+                  sx={{ justifyContent: "center", marginRight: "2px" }}
+                />
+                Blog
+              </Button>
+              <Button
+                variant="text"
+                selected={location.pathname === "/medicines" ? true : false}
+                sx={
+                  location.pathname === "/medicines"
+                    ? {
+                        textTransform: "none",
+                        color: "black",
+                        borderBottom: "1px solid",
+                        boxShadow: "none",
+                      }
+                    : {
+                        textTransform: "none",
+                        color: "#E5E4E4",
+                        "&:hover": {
+                          color: "black",
+                          borderBottom: "1px solid",
+                          boxShadow: "none",
+                        },
+                      }
+                }
+                onClick={() => navigate("/medicines")}
+              >
+                <MedicalServicesIcon
+                  sx={{ justifyContent: "center", marginRight: "2px" }}
+                />
+                Medicine
+              </Button>
+              <Button
+                variant="text"
+                selected={location.pathname === "/cart" ? true : false}
+                sx={
+                  location.pathname === "/cart"
+                    ? {
+                        textTransform: "none",
+                        color: "black",
+                        borderBottom: "1px solid",
+                        boxShadow: "none",
+                      }
+                    : {
+                        textTransform: "none",
+                        color: "#E5E4E4",
+                        "&:hover": {
+                          color: "black",
+                          borderBottom: "1px solid",
+                          boxShadow: "none",
+                        },
+                      }
+                }
+                onClick={() => navigate("/cart")}
+              >
+                <Badge
+                  badgeContent={3}
+                  color="secondary"
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                >
+                  <ShoppingBasketIcon
+                    sx={{ justifyContent: "center", marginRight: "2px" }}
+                  />
+                </Badge>
+                Cart
+              </Button>
+              <StyledLoginButton variant="contained" onClick={openDialog}>
+                Login
+              </StyledLoginButton>
+            </Stack>
+          </>
+        )}
       </Toolbar>
       <Dialoge open={open} onClose={closeDialog} page="login" />
     </AppBar>
