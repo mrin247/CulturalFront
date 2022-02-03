@@ -84,9 +84,6 @@ const StyledLoginButton = styled(Button)(({ theme }) => ({
     boxShadow: "none",
     backgroundColor: "#D1D0D0",
   },
-  "&:focus": {
-    boxShadow: "0 0 0 0.2rem #E5E4E4",
-  },
 }));
 
 export const Header = (props) => {

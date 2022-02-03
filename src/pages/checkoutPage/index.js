@@ -5,16 +5,37 @@ import {
   Divider,
   Grid,
   Paper,
+  TextField,
   Typography,
 } from "@mui/material";
+import { styled } from "@mui/styles";
 import React from "react";
 import { Layout } from "../../components/Layout";
 import { SideSummary } from "../../components/SideSummary";
-
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import CampaignIcon from "@mui/icons-material/Campaign";
+import StarIcon from "@mui/icons-material/Star";
 /**
  * @author
  * @function CheckoutPage
  **/
+
+const StyledContinueButton = styled(Button)(({ theme }) => ({
+  boxShadow: "none",
+  padding: "10px 50px",
+  color: "white",
+  fontSize: "16px",
+  fontWeight: "600",
+  backgroundColor: "#a9812d",
+  "&:hover": {
+    backgroundColor: "#a9812d",
+    boxShadow: "none",
+  },
+  "&:active": {
+    boxShadow: "none",
+    backgroundColor: "#a9812d",
+  },
+}));
 
 export const CheckoutPage = (props) => {
   return (
@@ -44,7 +65,27 @@ export const CheckoutPage = (props) => {
                           </Typography>
                           <Typography pl={2}>LOGIN OR SIGNUP</Typography>
                           <Box sx={{ display: "flex", marginLeft: "auto" }}>
-                            <Button variant="outlined" size="small">
+                            <Button
+                              variant="outlined"
+                              size="small"
+                              sx={{
+                                boxShadow: "none",
+                                border: "1px solid",
+                                color: "#a9812d",
+                                fontSize: "12px",
+                                fontWeight: "600",
+
+                                "&:hover": {
+                                  border: "1px solid",
+                                  boxShadow: "none",
+                                },
+                                "&:active": {
+                                  boxShadow: "none",
+                                  border: "1px solid",
+                                  backgroundColor: "#ffffff",
+                                },
+                              }}
+                            >
                               Change
                             </Button>
                           </Box>
@@ -68,6 +109,117 @@ export const CheckoutPage = (props) => {
                             mm455575@gmail.com
                           </Typography>
                         </Box>
+                        <Box ml={6} mt={2}>
+                          <Grid container spacing={2}>
+                            <Box pl={2} pr={2}>
+                              <Grid item xs={8}>
+                                <TextField
+                                  fullWidth
+                                  id="standard-basic"
+                                  label="Email Address"
+                                  variant="standard"
+                                  color="secondary"
+                                />
+                                <TextField
+                                  fullWidth
+                                  id="standard-password-input"
+                                  label="Password"
+                                  type="password"
+                                  autoComplete="current-password"
+                                  variant="standard"
+                                  color="secondary"
+                                />
+                                <Typography sx={{fontSize:"14px",fontWeight:600, color:"#a9812d", cursor:"pointer", display:"flex", justifyContent:"center"}} mt={2}>Logout & Signin with another account</Typography>
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
+                                  pt={2}
+                                >
+                                  <StyledContinueButton>
+                                    Continue
+                                  </StyledContinueButton>
+                                </Box>
+                              </Grid>
+                            </Box>
+
+                            <Grid item xs={4}>
+                              <Box>
+                                <Typography
+                                  sx={{
+                                    color: "##000000c9",
+                                    fontSize: 16,
+                                    fontWeight: 100,
+                                  }}
+                                  mb={2}
+                                >
+                                  Advantages of secure login
+                                </Typography>
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    textAllign: "center",
+                                    color: "#a9812d",
+                                  }}
+                                >
+                                  <LocalShippingIcon />
+                                  <Typography
+                                    sx={{
+                                      color: "#a9812d",
+                                      fontSize: 14,
+                                      fontWeight: 100,
+                                    }}
+                                    pb={1}
+                                    ml={1}
+                                  >
+                                    Easily track orders.
+                                  </Typography>
+                                </Box>
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    textAllign: "center",
+                                    color: "#a9812d",
+                                  }}
+                                >
+                                  <CampaignIcon />
+                                  <Typography
+                                    sx={{
+                                      color: "#a9812d",
+                                      fontSize: 14,
+                                      fontWeight: 100,
+                                    }}
+                                    pb={1}
+                                    ml={1}
+                                  >
+                                    Explore State Feed.
+                                  </Typography>
+                                </Box>
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    textAllign: "center",
+                                    color: "#a9812d",
+                                  }}
+                                >
+                                  <StarIcon />
+                                  <Typography
+                                    sx={{
+                                      color: "#a9812d",
+                                      fontSize: 14,
+                                      fontWeight: 100,
+                                    }}
+                                    pb={1}
+                                    ml={1}
+                                  >
+                                    Reviews, Ratings and more.
+                                  </Typography>
+                                </Box>
+                              </Box>
+                            </Grid>
+                          </Grid>
+                        </Box>
                       </Box>
                     </Box>
                   </Paper>
@@ -86,7 +238,27 @@ export const CheckoutPage = (props) => {
                         </Typography>
                         <Typography pl={2}>DELIVERY ADDRESS</Typography>
                         <Box sx={{ marginLeft: "auto" }}>
-                          <Button variant="outlined" size="small">
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            sx={{
+                              boxShadow: "none",
+                              border: "1px solid",
+                              color: "#a9812d",
+                              fontSize: "12px",
+                              fontWeight: "600",
+
+                              "&:hover": {
+                                border: "1px solid",
+                                boxShadow: "none",
+                              },
+                              "&:active": {
+                                boxShadow: "none",
+                                border: "1px solid",
+                                backgroundColor: "#ffffff",
+                              },
+                            }}
+                          >
                             Change
                           </Button>
                         </Box>
