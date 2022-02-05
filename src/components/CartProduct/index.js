@@ -83,52 +83,52 @@ export const CardProduct = (props) => {
                 </Box>
               </Box>
             </Grid>
-            {location.pathname === "/cart" ? (
-              <Grid item xs={4}>
-                <Box m={1}>
-                  <Typography>Delivery in 2-3 days</Typography>
-                  <Typography sx={{ color: "#878787", fontSize: 14 }} mt={2}>
-                    10 Days Replacement Policy
-                  </Typography>
-                </Box>
-              </Grid>
-            ) : null}
+            <Grid item xs={4}>
+              <Box m={1}>
+                <Typography>Delivery in 2-3 days</Typography>
+                <Typography sx={{ color: "#878787", fontSize: 14 }} mt={2}>
+                  10 Days Replacement Policy
+                </Typography>
+              </Box>
+            </Grid>
+            )
           </Grid>
         </Box>
-        {location.pathname === "/cart" ? (
-          <Grid container spacing={1}>
-            <Grid item xs={2}>
-              <Box sx={{ display: "flex", alignItems: "center" }} mt={1} mb={1}>
-                <IconButton aria-label="delete">
-                  <RemoveRoundedIcon
-                    sx={{ border: "1px solid black", borderRadius: "50%" }}
-                  />
-                </IconButton>
-                <TextField
-                  variant="outlined"
-                  InputProps={{ classes: { input: classes.input1 } }}
-                />
-                <IconButton aria-label="add">
-                  <AddRoundedIcon
-                    sx={{ border: "1px solid black", borderRadius: "50%" }}
-                  />
-                </IconButton>
-              </Box>
-            </Grid>
 
-            <Grid item spacing={10}>
-              <Box
-                sx={{ display: "flex", alignItems: "center" }}
-                mt={1}
-                mb={1}
-                ml={3}
-              >
-                <StyledButton>Save for later</StyledButton>
-                <StyledButton>Remove</StyledButton>
-              </Box>
-            </Grid>
+        <Grid container spacing={1}>
+          <Grid item xs={2}>
+            <Box sx={{ display: "flex", alignItems: "center" }} mt={1} mb={1}>
+              <IconButton aria-label="delete">
+                <RemoveRoundedIcon
+                  sx={{ border: "1px solid black", borderRadius: "50%" }}
+                />
+              </IconButton>
+              <TextField
+                variant="outlined"
+                InputProps={{ classes: { input: classes.input1 } }}
+              />
+              <IconButton aria-label="add">
+                <AddRoundedIcon
+                  sx={{ border: "1px solid black", borderRadius: "50%" }}
+                />
+              </IconButton>
+            </Box>
           </Grid>
-        ) : null}
+
+          <Grid item spacing={10}>
+            <Box
+              sx={{ display: "flex", alignItems: "center" }}
+              mt={1}
+              mb={1}
+              ml={3}
+            >
+              {location.pathname === "/cart" ? (
+                <StyledButton>Save for later</StyledButton>
+              ) : null}
+              <StyledButton>Remove</StyledButton>
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
       <Divider light />
     </>

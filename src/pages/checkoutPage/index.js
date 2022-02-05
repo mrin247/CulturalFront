@@ -312,10 +312,15 @@ export const CheckoutPage = (props) => {
                         >
                           3
                         </Typography>
-                        <Typography pl={2}>ORDER DETAILS</Typography>
+                        <Typography pl={2}>ORDER SUMMARY</Typography>
                       </Box>
-                      <CardProduct/>
-                      <CardProduct/>
+                      <CardProduct />
+                      <CardProduct />
+                      <Box sx={{ display: "flex" }}>
+                        <Box sx={{ marginLeft: "auto" }} p={2}>
+                          <StyledContinueButton>Continue</StyledContinueButton>
+                        </Box>
+                      </Box>
                     </Box>
                   </Paper>
                 </Grid>
