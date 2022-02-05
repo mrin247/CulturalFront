@@ -12,7 +12,7 @@ export const Address = (props) => {
   return (
     <Box sx={{ display: "flex", cursor: "pointer" }} ml={6}>
       <Box>
-        <Checkbox {...label} />
+        <Checkbox {...label} color="secondary"/>
       </Box>
       <Box>
         <Box sx={{ display: "flex", textAlign: "center" }}>

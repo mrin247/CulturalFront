@@ -13,6 +13,7 @@ import React from "react";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import CurrencyRupeeRoundedIcon from "@mui/icons-material/CurrencyRupeeRounded";
+import { useLocation, useNavigate } from "react-router-dom";
 
 /**
  * @author
@@ -49,6 +50,7 @@ const useStyle = makeStyles({
 
 export const CardProduct = (props) => {
   const classes = useStyle();
+  const location = useLocation();
   return (
     <>
       <Box mt={3} ml={3} mr={3} mb={1}>
@@ -81,48 +83,52 @@ export const CardProduct = (props) => {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={4}>
-              <Box m={1}>
-                <Typography>Delivery in 2-3 days</Typography>
-                <Typography sx={{ color: "#878787", fontSize: 14 }} mt={2}>
-                  10 Days Replacement Policy
-                </Typography>
+            {location.pathname === "/cart" ? (
+              <Grid item xs={4}>
+                <Box m={1}>
+                  <Typography>Delivery in 2-3 days</Typography>
+                  <Typography sx={{ color: "#878787", fontSize: 14 }} mt={2}>
+                    10 Days Replacement Policy
+                  </Typography>
+                </Box>
+              </Grid>
+            ) : null}
+          </Grid>
+        </Box>
+        {location.pathname === "/cart" ? (
+          <Grid container spacing={1}>
+            <Grid item xs={2}>
+              <Box sx={{ display: "flex", alignItems: "center" }} mt={1} mb={1}>
+                <IconButton aria-label="delete">
+                  <RemoveRoundedIcon
+                    sx={{ border: "1px solid black", borderRadius: "50%" }}
+                  />
+                </IconButton>
+                <TextField
+                  variant="outlined"
+                  InputProps={{ classes: { input: classes.input1 } }}
+                />
+                <IconButton aria-label="add">
+                  <AddRoundedIcon
+                    sx={{ border: "1px solid black", borderRadius: "50%" }}
+                  />
+                </IconButton>
+              </Box>
+            </Grid>
+
+            <Grid item spacing={10}>
+              <Box
+                sx={{ display: "flex", alignItems: "center" }}
+                mt={1}
+                mb={1}
+                ml={3}
+              >
+                <StyledButton>Save for later</StyledButton>
+                <StyledButton>Remove</StyledButton>
               </Box>
             </Grid>
           </Grid>
-        </Box>
-
-        <Grid container spacing={1}>
-          <Grid item xs={2}>
-            <Box sx={{ display: "flex", alignItems: "center" }} mt={1} mb={1}>
-              <IconButton aria-label="delete">
-                <RemoveRoundedIcon
-                  sx={{ border: "1px solid black", borderRadius: "50%" }}
-                />
-              </IconButton>
-              <TextField
-                variant="outlined"
-                InputProps={{ classes: { input: classes.input1 } }}
-              />
-              <IconButton aria-label="add">
-                <AddRoundedIcon
-                  sx={{ border: "1px solid black", borderRadius: "50%" }}
-                />
-              </IconButton>
-            </Box>
-          </Grid>
-          <Grid item spacing={10}>
-            <Box
-              sx={{ display: "flex", alignItems: "center" }}
-              mt={1}
-              mb={1}
-              ml={3}
-            >
-              <StyledButton>Save for later</StyledButton>
-              <StyledButton>Remove</StyledButton>
-            </Box>
-          </Grid>
-        </Grid>
+        ) : null}
       </Box>
       <Divider light />
     </>

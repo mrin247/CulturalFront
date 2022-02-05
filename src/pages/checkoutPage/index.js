@@ -9,13 +9,15 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/styles";
-import React from "react";
+import React, { useState } from "react";
 import { Layout } from "../../components/Layout";
 import { SideSummary } from "../../components/SideSummary";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import StarIcon from "@mui/icons-material/Star";
 import { Address } from "../../components/Address";
+import { AddressModal } from "../../components/AddressModal";
+import { CardProduct } from "../../components/CartProduct";
 /**
  * @author
  * @function CheckoutPage
@@ -39,6 +41,7 @@ const StyledContinueButton = styled(Button)(({ theme }) => ({
 }));
 
 export const CheckoutPage = (props) => {
+  const [open, setOpen] = useState(false);
   return (
     <Layout>
       <Container maxWidth="xl">
@@ -278,9 +281,15 @@ export const CheckoutPage = (props) => {
                                   backgroundColor: "#ffffff",
                                 },
                               }}
+                              onClick={() => setOpen(true)}
+                              onClose={() => setOpen(false)}
                             >
                               Add
                             </Button>
+                            <AddressModal
+                              open={open}
+                              close={() => setOpen(false)}
+                            />
                           </Box>
                         </Box>
                         <Box sx={{ cursor: "pointer" }}>
@@ -305,6 +314,8 @@ export const CheckoutPage = (props) => {
                         </Typography>
                         <Typography pl={2}>ORDER DETAILS</Typography>
                       </Box>
+                      <CardProduct/>
+                      <CardProduct/>
                     </Box>
                   </Paper>
                 </Grid>
