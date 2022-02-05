@@ -15,6 +15,7 @@ import { SideSummary } from "../../components/SideSummary";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import StarIcon from "@mui/icons-material/Star";
+import { Address } from "../../components/Address";
 /**
  * @author
  * @function CheckoutPage
@@ -129,7 +130,19 @@ export const CheckoutPage = (props) => {
                                   variant="standard"
                                   color="secondary"
                                 />
-                                <Typography sx={{fontSize:"14px",fontWeight:600, color:"#a9812d", cursor:"pointer", display:"flex", justifyContent:"center"}} mt={2}>Logout & Signin with another account</Typography>
+                                <Typography
+                                  sx={{
+                                    fontSize: "14px",
+                                    fontWeight: 600,
+                                    color: "#a9812d",
+                                    cursor: "pointer",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
+                                  mt={2}
+                                >
+                                  Logout & Signin with another account
+                                </Typography>
                                 <Box
                                   sx={{
                                     display: "flex",
@@ -228,39 +241,52 @@ export const CheckoutPage = (props) => {
                 <Grid item xs={12}>
                   <Paper elevation={3}>
                     <Box sx={{ backgroundColor: "#f1f3f6" }}>
-                      <Box sx={{ display: "flex", color: "black" }} p={2}>
-                        <Typography
-                          sx={{ border: "1px solid black" }}
-                          pl={1}
-                          pr={1}
+                      <Box p={2}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            color: "black",
+                            textAlign: "center",
+                          }}
                         >
-                          2
-                        </Typography>
-                        <Typography pl={2}>DELIVERY ADDRESS</Typography>
-                        <Box sx={{ marginLeft: "auto" }}>
-                          <Button
-                            variant="outlined"
-                            size="small"
-                            sx={{
-                              boxShadow: "none",
-                              border: "1px solid",
-                              color: "#a9812d",
-                              fontSize: "12px",
-                              fontWeight: "600",
-
-                              "&:hover": {
-                                border: "1px solid",
-                                boxShadow: "none",
-                              },
-                              "&:active": {
-                                boxShadow: "none",
-                                border: "1px solid",
-                                backgroundColor: "#ffffff",
-                              },
-                            }}
+                          <Typography
+                            sx={{ border: "1px solid black" }}
+                            pl={1}
+                            pr={1}
                           >
-                            Change
-                          </Button>
+                            2
+                          </Typography>
+                          <Typography pl={2}>DELIVERY ADDRESS</Typography>
+                          <Box sx={{ marginLeft: "auto" }}>
+                            <Button
+                              variant="outlined"
+                              size="small"
+                              sx={{
+                                boxShadow: "none",
+                                border: "1px solid",
+                                color: "#a9812d",
+                                fontSize: "12px",
+                                fontWeight: "600",
+
+                                "&:hover": {
+                                  border: "1px solid",
+                                  boxShadow: "none",
+                                },
+                                "&:active": {
+                                  boxShadow: "none",
+                                  border: "1px solid",
+                                  backgroundColor: "#ffffff",
+                                },
+                              }}
+                            >
+                              Add
+                            </Button>
+                          </Box>
+                        </Box>
+                        <Box sx={{ cursor: "pointer" }}>
+                          <Address />
+                          <Divider />
+                          <Address />
                         </Box>
                       </Box>
                     </Box>
