@@ -19,12 +19,13 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     justifyContent: "space-between",
-    margin: "65px 130px 0 130px",
+    padding: "65px 130px 0 130px",
     overflowX: "overlay",
     cursor: "pointer",
+    backgroundColor: "#c9cacc",
   },
-  imageContainer: {
-    padding: "12px 8px",
+  textContainer: {
+    padding: "10px 8px",
     textAlign: "center",
   },
   text: {
@@ -35,17 +36,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const NavbarHome = (props) => {
+export const NavbarProduct = (props) => {
   const styles = useStyles();
   const navigate = useNavigate();
   return (
     <Box className={styles.container}>
       {navData.map((data) => (
         <Box
-          className={styles.imageContainer}
+          className={styles.textContainer}
           onClick={() => navigate(`/${data.route}`)}
         >
-          <img src={data.url} className={styles.image} />
           <Typography className={styles.text}>{data.text}</Typography>
         </Box>
       ))}

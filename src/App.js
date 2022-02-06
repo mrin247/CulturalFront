@@ -8,6 +8,7 @@ import { ArtistsPage } from "./pages/artistsPage";
 import { BlogsPage } from "./pages/blogsPage";
 import { CartPage } from "./pages/cartPage";
 import { CheckoutPage } from "./pages/checkoutPage";
+import { HomeNeedsPage } from "./pages/homeNeedsPage";
 import { HomePage } from "./pages/homePage";
 import { JewelsPage } from "./pages/jewelleryPage";
 import { MedicinePage } from "./pages/medicinePage";
@@ -47,6 +48,8 @@ function App() {
           <Route exact path="/blogs" element={<BlogsPage />} />
           <Route exact path="/medicines" element={<MedicinePage />} />
           <Route exact path="/checkout" element={<CheckoutPage />} />
+
+          <Route exact path="/home-needs" element={<HomeNeedsPage />} />
 
           <Route
             exact

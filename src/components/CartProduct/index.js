@@ -91,7 +91,7 @@ export const CardProduct = (props) => {
                 </Typography>
               </Box>
             </Grid>
-            )
+            
           </Grid>
         </Box>
 

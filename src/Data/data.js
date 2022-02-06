@@ -10,34 +10,41 @@ import India from "../images/india-banner.jpg";
 import mahadev from "../images/mahadev.jpg";
 
 export const navData = [
-  { url: homeNeeds, text: "Home Needs" },
+  { url: homeNeeds, text: "Home Needs", route: "home-needs" },
   {
     url: grocery,
     text: "Grocery",
+    route: "grocery",
   },
   {
     url: fashion,
     text: "Fashion",
+    route: "fashion",
   },
   {
     url: books,
     text: "Books & Magazines",
+    route: "books-&-magazines",
   },
   {
     url: handlooms,
     text: "Handlooms",
+    route: "handlooms",
   },
   {
     url: lifestyles,
     text: "Lifestyle",
+    route: "lifestyle",
   },
   {
     url: puja,
     text: "Puja Samagrhi",
+    route: "puja-samagrhi",
   },
   {
     url: toys,
     text: "Toys & More",
+    route: "toys-&-more",
   },
 ];
 
