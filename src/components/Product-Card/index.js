@@ -14,7 +14,7 @@ const Image = styled("img")(({ theme }) => ({
 
 export const ProductCard = (props) => {
   return (
-    <Paper elevatiion={3} sx={{ cursor: "pointer" }}>
+    <Paper elevatiion={24} sx={{ cursor: "pointer" }}>
       <Box p={1}>
         <Box sx={{ textAlign: "center" }}>
           <Box p={1}>

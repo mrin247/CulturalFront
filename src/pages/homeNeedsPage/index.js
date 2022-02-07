@@ -8,11 +8,14 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { Carousel } from "../../components/Carousel";
 import { Layout } from "../../components/Layout";
 import { NavbarProduct } from "../../components/Navbar-Product";
 import { ProductCard } from "../../components/Product-Card";
 import { SideFilter } from "../../components/Side-Filter";
 import { SideSummary } from "../../components/SideSummary";
+import { StoreLists } from "../../components/StoreLists";
+import { StoreSlide } from "../../components/StoreSlide";
 
 /**
  * @author
@@ -31,6 +34,9 @@ export const HomeNeedsPage = (props) => {
           </Grid>
           <Grid item xs={10} sx={{ marginLeft: "41vh" }}>
             <Box>
+              <StoreLists />
+            </Box>
+            <Box mb={2}>
               <Grid container spacing={1}>
                 <Grid item xs={3}>
                   <ProductCard />
