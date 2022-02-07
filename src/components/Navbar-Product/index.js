@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import { navData } from "../../Data/data";
 import { makeStyles } from "@mui/styles";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 /**
  * @author
@@ -34,16 +34,28 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     fontFamily: "inherit",
   },
+  pageTextContainer: {
+    padding: "10px 8px",
+    textAlign: "center",
+    backgroundColor: "#ffffff",
+    borderTopLeftRadius: "10px",
+    borderTopRightRadius: "10px",
+  },
 }));
 
 export const NavbarProduct = (props) => {
   const styles = useStyles();
   const navigate = useNavigate();
+  const location = useLocation();
   return (
     <Box className={styles.container}>
       {navData.map((data) => (
         <Box
-          className={styles.textContainer}
+          className={
+            location.pathname === `/${data.route}`
+              ? styles.pageTextContainer
+              : styles.textContainer
+          }
           onClick={() => navigate(`/${data.route}`)}
         >
           <Typography className={styles.text}>{data.text}</Typography>

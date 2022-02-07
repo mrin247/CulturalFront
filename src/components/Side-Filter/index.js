@@ -20,10 +20,10 @@ export const SideFilter = (props) => {
               fontSize: 16,
               fontWeight: 500,
               color: "#878787",
-              textTransform: "uppercase",
+              textTransform: "none",
             }}
           >
-            Price Details
+            Filters
           </Typography>
         </Box>
         <Divider />
