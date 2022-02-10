@@ -49,9 +49,9 @@ export const SideProduct = (props) => {
   const classes = useStyle();
 
   return (
-    <Box position={"fixed"} sx={{ width: "90vh" }}>
-      <Paper elevation={3}>
-        <Grid container spacing={0.5}>
+    <Box position={"fixed"} sx={{ width: "80vh" }}>
+      <Paper elevation={1}>
+        <Grid container spacing={1}>
           <Grid item xs={2}>
             {/* image stack */}
             <Stack spacing={0.5} alignItems="center">
@@ -98,33 +98,16 @@ export const SideProduct = (props) => {
               />
             </IconButton>
           </Box>
-          <Box sx={{ display: "inline-block", allignItems: "center" }} mr={2}>
-            <Button
-              startIcon={<FavoriteIcon />}
-              sx={{
-                allignItems: "center",
-                textTransform: "none",
-                color: "Black",
-                fontSize: "16px",
-                fontWeight: "550",
-                marginRight: "5px",
-                backgroundColor: "white",
-                "&:hover": {
-                  color: "rgb(169 129 45)",
-                  backgroundColor: "white",
-                },
-                "&:active": {
-                  color: "rgb(169 129 45)",
-                  backgroundColor: "white",
-                },
-                "&:focus": {
-                  color: "rgb(169 129 45)",
-                  backgroundColor: "white",
-                },
-              }}
-            >
-              Add to Wishlist
-            </Button>
+          <Box
+            sx={{
+              display: "inline-block",
+              allignItems: "center",
+            }}
+            mr={2}
+          >
+            <IconButton aria-label="delete" size="medium" sx={{ color: "red" }}>
+              <FavoriteIcon fontSize="inherit" />
+            </IconButton>
           </Box>
         </Box>
 
@@ -140,18 +123,18 @@ export const SideProduct = (props) => {
                 fontSize: "16px",
                 lineHeight: "3",
                 fontWeight: "550",
-                backgroundColor: "rgb(169 129 45)",
+                backgroundColor: "rgb(169 102 45)",
                 "&:hover": {
                   color: "white",
-                  backgroundColor: "rgb(169 129 45)",
+                  backgroundColor: "rgb(169 102 45)",
                 },
                 "&:active": {
                   color: "white",
-                  backgroundColor: "rgb(169 129 45)",
+                  backgroundColor: "rgb(169 102 45)",
                 },
                 "&:focus": {
                   color: "white",
-                  backgroundColor: "rgb(169 129 45)",
+                  backgroundColor: "rgb(169 102 45)",
                 },
               }}
             >

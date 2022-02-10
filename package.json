@@ -17,6 +17,7 @@
     "react-multi-carousel": "^2.6.5",
     "react-router-dom": "^6.2.1",
     "react-scripts": "4.0.3",
+    "react-window": "^1.8.6",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
