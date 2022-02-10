@@ -17,6 +17,7 @@ import { HomePage } from "./pages/homePage";
 import { JewelsPage } from "./pages/jewelleryPage";
 import { LifeStylePage } from "./pages/lifestylePage";
 import { MedicinePage } from "./pages/medicinePage";
+import { Product } from "./pages/productPage";
 import { PujaPage } from "./pages/pujaPage";
 import { ToysPage } from "./pages/toysPage";
 import { TravelPage } from "./pages/travelPage";
@@ -64,6 +65,7 @@ function App() {
           <Route exact path="/lifestyle" element={<LifeStylePage />} />
           <Route exact path="/puja-samagrhi" element={<PujaPage />} />
           <Route exact path="/toys-&-more" element={<ToysPage />} />
+          <Route exact path="/toys-&-more/p/:productId" element={<Product />} />
 
           <Route
             exact
