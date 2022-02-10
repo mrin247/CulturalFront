@@ -65,7 +65,7 @@ function App() {
           <Route exact path="/lifestyle" element={<LifeStylePage />} />
           <Route exact path="/puja-samagrhi" element={<PujaPage />} />
           <Route exact path="/toys-&-more" element={<ToysPage />} />
-          <Route exact path="/toys-&-more/p/:productId" element={<Product />} />
+          <Route exact path="/p/:productId" element={<Product />} />
 
           <Route
             exact
