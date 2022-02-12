@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import signupImage from "../../images/signup.jpg";
 import Visibility from "@mui/icons-material/Visibility";
 import Link from "@mui/material/Link";
@@ -26,6 +26,8 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { green, purple, yellow } from "@mui/material/colors";
 import { Dialoge } from "../Dialog";
+import { Navigate, useNavigate } from "react-router-dom";
+import { signup } from "../../actions/authActions";
 /**
  * @author
  * @function Login
@@ -49,6 +51,14 @@ const ColorButton = styled(Button)(({ theme }) => ({
  **/
 
 export const SignupContent = (props) => {
+  const navigate = useNavigate();
+  const [firstName, setFirstName] = React.useState();
+  const [lastName, setLastName] = React.useState();
+  const [email, setEmail] = React.useState();
+  const [contactNumber, setContactNumber] = React.useState();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+
   const [values, setValues] = React.useState({
     amount: "",
     password: null,
@@ -90,6 +100,32 @@ export const SignupContent = (props) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  const user = {
+    firstName,
+    lastName,
+    email,
+    password: values.password,
+    contactNumber,
+  };
+
+  const createAccount = (e) => {
+    e.preventDefault();
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !values.password ||
+      !confirmValues.confirmPassword ||
+      !contactNumber
+    ) {
+      console.log(user);
+      alert("Please fill all");
+    } else if (values.password !== confirmValues.confirmPassword) {
+      alert("Passwords shpould be same");
+    } else {
+      dispatch(signup(user)).then(() => props.close());
+    }
+  };
 
   return (
     <DialogContent>
@@ -106,6 +142,8 @@ export const SignupContent = (props) => {
                 label="First Name"
                 variant="standard"
                 color="success"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
               />
               <TextField
                 required
@@ -113,6 +151,8 @@ export const SignupContent = (props) => {
                 label="Last Name"
                 variant="standard"
                 color="success"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </Box>
             <Box mt={2} mb={2}>
@@ -123,6 +163,8 @@ export const SignupContent = (props) => {
                 label="Contact Number"
                 variant="standard"
                 color="success"
+                value={contactNumber}
+                onChange={(e) => setContactNumber(e.target.value)}
               />
             </Box>
             <Box mt={2} mb={2}>
@@ -133,6 +175,8 @@ export const SignupContent = (props) => {
                 label="Email Address"
                 variant="standard"
                 color="success"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Box>
             <Box mt={2} mb={2}>
@@ -212,6 +256,7 @@ export const SignupContent = (props) => {
                 variant="contained"
                 size="medium"
                 sx={{ textTransform: "none" }}
+                onClick={createAccount}
               >
                 Create Account
               </ColorButton>

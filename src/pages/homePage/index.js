@@ -6,6 +6,7 @@ import { Layout } from "../../components/Layout";
 import { NavbarHome } from "../../components/Navbar-Home";
 import { ProductSlide } from "../../components/ProductSlide";
 import { StoreSlide } from "../../components/StoreSlide";
+import { useDispatch, useSelector } from "react-redux";
 
 /**
  * @author
@@ -19,6 +20,10 @@ const useStyle = makeStyles({
 });
 
 export const HomePage = (props) => {
+
+  //const auth = useSelector((state) => state.auth);
+
+
   const styles = useStyle();
   const viewAllTopProducts = () => {
     alert("viewAllTopProducts");
@@ -26,9 +31,10 @@ export const HomePage = (props) => {
   const viewAllTopStores = () => {
     alert("viewAllTopStores");
   };
+  //console.log(auth);
   return (
     <Layout>
-      <NavbarHome />
+      <NavbarHome/>
       <Box className={styles.carousel}>
         <Carousel />
         <ProductSlide title="Top Products" viewAll={viewAllTopProducts} />

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // Components
 
 import { Header } from "./components/Header";
+import PrivateRoute from "./components/HOC/privateRoute";
 import { ResetPassword } from "./components/Reset-Password";
 import { ArtistsPage } from "./pages/artistsPage";
 import { BlogsPage } from "./pages/blogsPage";
@@ -21,32 +22,26 @@ import { Product } from "./pages/productPage";
 import { PujaPage } from "./pages/pujaPage";
 import { ToysPage } from "./pages/toysPage";
 import { TravelPage } from "./pages/travelPage";
+import { useDispatch, useSelector } from "react-redux";
+import { isUserLoggedIn } from "./actions/authActions";
 
 function App() {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (!auth.authenticate) {
+      dispatch(isUserLoggedIn());
+    }
+  }, [auth.authenticate]);
   return (
-    // <>
-    //   <Header />
-    //   <HomePage />
-    // </>
-
     <Router>
       <Fragment>
         <Routes>
-          {/* <Route exact path="/" element={<PrivateRoute />}>
-            <Route exact path="/" element={<Dashboard />} />
+          
+
+          <Route exact path="/checkout" element={<PrivateRoute />}>
+            <Route exact path="/checkout" element={<CheckoutPage />} />
           </Route>
-          <Route exact path="/products" element={<PrivateRoute />}>
-            <Route exact path="/products" element={<Products />} />
-          </Route>
-          <Route exact path="/products/:productId" element={<PrivateRoute />}>
-            <Route exact path="/products/:productId" element={<Product />} />
-          </Route>
-          <Route exact path="/customers" element={<PrivateRoute />}>
-            <Route exact path="/customers" element={<Customers />} />
-          </Route>
-          <Route exact path="/orders" element={<PrivateRoute />}>
-            <Route exact path="/orders" element={<Orders />} />
-          </Route> */}
 
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/cart" element={<CartPage />} />
@@ -55,7 +50,6 @@ function App() {
           <Route exact path="/travels" element={<TravelPage />} />
           <Route exact path="/blogs" element={<BlogsPage />} />
           <Route exact path="/medicines" element={<MedicinePage />} />
-          <Route exact path="/checkout" element={<CheckoutPage />} />
 
           <Route exact path="/home-needs" element={<HomeNeedsPage />} />
           <Route exact path="/grocery" element={<GroceryPage />} />

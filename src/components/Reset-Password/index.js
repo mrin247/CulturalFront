@@ -9,12 +9,15 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/styles";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import resetImage from "../../images/reset.jpg";
 import Visibility from "@mui/icons-material/Visibility";
 import Link from "@mui/material/Link";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import HttpsIcon from "@mui/icons-material/Https";
 import { blue, yellow } from "@mui/material/colors";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { resetPassword } from "../../actions/authActions";
 
 /**
  * @author
@@ -33,6 +36,9 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 export const ResetPassword = (props) => {
+  const navigate = useNavigate();
+  const { resetToken } = useParams();
+  const dispatch = useDispatch();
   const [values, setValues] = React.useState({
     amount: "",
     password: null,
@@ -48,6 +54,7 @@ export const ResetPassword = (props) => {
     weightRange: "",
     showConfirmPassword: false,
   });
+  const auth = useSelector((state) => state.auth);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -74,6 +81,26 @@ export const ResetPassword = (props) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const credentials = {
+    token: resetToken,
+    password: values.password,
+  };
+
+  const savePassword = (e) => {
+    e.preventDefault();
+    if (values.password !== confirmValues.confirmPassword) {
+      setValues({ ...values, password: null });
+      setConfirmValues({ ...confirmValues, password: null });
+    } else {
+      dispatch(resetPassword(credentials)).then(() => navigate("/"));
+    }
+  };
+
+  if (auth.authenticate) {
+    return <Navigate to={`/`} />;
+  }
+
   return (
     <>
       <CssBaseline />
@@ -154,6 +181,7 @@ export const ResetPassword = (props) => {
               variant="contained"
               size="medium"
               sx={{ textTransform: "none" }}
+              onClick={savePassword}
             >
               Save Password
             </ColorButton>

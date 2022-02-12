@@ -8,6 +8,7 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { Badge, Button, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
+import {useSelector} from "react-redux"
 
 //ICONS
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
@@ -90,14 +91,17 @@ export const Header = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = React.useState(false);
+  const auth=useSelector(state=>state.auth)
   const openDialog = () => {
     setOpen(true);
   };
   const closeDialog = () => {
     setOpen(false);
   };
+  console.log(auth);
   return (
-    <AppBar position="fixed"
+    <AppBar
+      position="fixed"
       sx={{
         backgroundColor: "#a9812d",
         zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -303,9 +307,13 @@ export const Header = (props) => {
                 </Badge>
                 Cart
               </Button>
-              <StyledLoginButton variant="contained" onClick={openDialog}>
-                Login
-              </StyledLoginButton>
+              {auth.authenticate ? (
+                <StyledLoginButton>{auth.user.firstName}</StyledLoginButton>
+              ) : (
+                <StyledLoginButton variant="contained" onClick={openDialog}>
+                  Login
+                </StyledLoginButton>
+              )}
             </Stack>
           </>
         )}

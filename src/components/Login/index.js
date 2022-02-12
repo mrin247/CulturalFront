@@ -14,7 +14,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import loginImage from "../../images/login.jpg";
 import Visibility from "@mui/icons-material/Visibility";
@@ -24,8 +25,9 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import {  yellow } from "@mui/material/colors";
+import { yellow } from "@mui/material/colors";
 import { Dialoge } from "../Dialog";
+import { forgotPassword, signin } from "../../actions/authActions";
 
 /**
  * @author
@@ -50,6 +52,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
  **/
 
 export const LoginContent = (props) => {
+  const [email, setEmail] = useState();
   const [values, setValues] = React.useState({
     amount: "",
     password: "",
@@ -57,6 +60,8 @@ export const LoginContent = (props) => {
     weightRange: "",
     showPassword: false,
   });
+
+  const dispatch = useDispatch();
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -82,6 +87,33 @@ export const LoginContent = (props) => {
     props.close();
   };
 
+  const user = {
+    email,
+    password: values.password,
+  };
+
+  const loginAccount = (e) => {
+    e.preventDefault();
+    if (!email || !values.password) {
+      alert("Please fill all");
+    } else {
+      dispatch(signin(user)).then(() => props.close());
+    }
+  };
+
+  const account = {
+    email,
+  };
+
+  const getResetLink = (e) => {
+    e.preventDefault();
+    if (!email) {
+      alert("please filll email to get link");
+    } else {
+      dispatch(forgotPassword(account)).then(() => props.close());
+    }
+  };
+
   return (
     <DialogContent>
       <Grid container spacing={2}>
@@ -98,6 +130,8 @@ export const LoginContent = (props) => {
                 label="Email Address"
                 variant="standard"
                 color="secondary"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Box>
             <Box mt={5} mb={5}>
@@ -141,6 +175,7 @@ export const LoginContent = (props) => {
                   onClick={() => alert("/forgot-password")}
                   underline="hover"
                   sx={{ color: "#002d68", fontWeight: 600 }}
+                  onClick={getResetLink}
                 >
                   Reset password here
                 </Link>
@@ -151,6 +186,7 @@ export const LoginContent = (props) => {
                 variant="contained"
                 size="medium"
                 sx={{ textTransform: "none" }}
+                onClick={loginAccount}
               >
                 Login
               </ColorButton>
