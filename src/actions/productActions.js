@@ -29,3 +29,32 @@ export const getProductsByCategory = (category) => {
     }
   };
 };
+
+export const productDetail = (productId) => {
+  return async (dispatch) => {
+    let res;
+    try {
+      dispatch({ type: productConstants.GET_PRODUCTS_BY_ID_REQUEST });
+      res = await axios.get(`/client/product/${productId}`);
+      if (res.status === 200) {
+        dispatch({
+          type: productConstants.GET_PRODUCTS_BY_ID_SUCCESS,
+          payload: { product: res.data.product },
+        });
+      } else {
+        console.log(res);
+        const { error } = res.data;
+        dispatch({
+          type: productConstants.GET_PRODUCTS_BY_ID_FAILURE,
+          payload: { error },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: productConstants.GET_PRODUCTS_BY_ID_FAILURE,
+        payload: { error },
+      });
+    }
+  };
+};

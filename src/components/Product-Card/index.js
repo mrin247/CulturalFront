@@ -1,6 +1,7 @@
 import { Box, Divider, Paper, Typography } from "@mui/material";
 import { styled } from "@mui/styles";
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import StarRateIcon from "@mui/icons-material/StarRate";
 /**
@@ -13,12 +14,17 @@ const Image = styled("img")(({ theme }) => ({
 }));
 
 export const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
   const imageSrc =
     product.productPhotos.length > 0
       ? product.productPhotos[0].img
       : "https://rukminim1.flixcart.com/image/150/150/kapoo7k0/electric-kettle/p/6/s/pigeon-favourite-original-imafs7xhj5uwgrh4.jpeg?q=70";
   return (
-    <Paper elevatiion={24} sx={{ cursor: "pointer" }}>
+    <Paper
+      elevatiion={24}
+      sx={{ cursor: "pointer" }}
+      onClick={() => navigate(`/p/${product._id}`)}
+    >
       <Box p={1}>
         <Box sx={{ textAlign: "center" }}>
           <Box p={1}>

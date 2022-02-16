@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import CurrencyRupeeRoundedIcon from "@mui/icons-material/CurrencyRupeeRounded";
@@ -45,8 +45,10 @@ const useStyle = makeStyles({
   },
 });
 
-export const SideProduct = (props) => {
+export const SideProduct = ({ product }) => {
   const classes = useStyle();
+  const [imgNo, setImgNo] = useState(0);
+  const productPhotos = product.productPhotos;
 
   return (
     <Box position={"fixed"} sx={{ width: "80vh" }}>
@@ -55,19 +57,18 @@ export const SideProduct = (props) => {
           <Grid item xs={2}>
             {/* image stack */}
             <Stack spacing={0.5} alignItems="center">
-              <SmallImage src="https://rukminim1.flixcart.com/image/150/150/kapoo7k0/electric-kettle/p/6/s/pigeon-favourite-original-imafs7xhj5uwgrh4.jpeg?q=70" />
-              <SmallImage src="https://rukminim1.flixcart.com/image/150/150/kapoo7k0/electric-kettle/p/6/s/pigeon-favourite-original-imafs7xhj5uwgrh4.jpeg?q=70" />
-              <SmallImage src="https://rukminim1.flixcart.com/image/150/150/kapoo7k0/electric-kettle/p/6/s/pigeon-favourite-original-imafs7xhj5uwgrh4.jpeg?q=70" />
-              <SmallImage src="https://rukminim1.flixcart.com/image/150/150/kapoo7k0/electric-kettle/p/6/s/pigeon-favourite-original-imafs7xhj5uwgrh4.jpeg?q=70" />
-              <SmallImage src="https://rukminim1.flixcart.com/image/150/150/kapoo7k0/electric-kettle/p/6/s/pigeon-favourite-original-imafs7xhj5uwgrh4.jpeg?q=70" />
-
-              <SmallImage src="https://rukminim1.flixcart.com/image/150/150/kapoo7k0/electric-kettle/p/6/s/pigeon-favourite-original-imafs7xhj5uwgrh4.jpeg?q=70" />
+              {productPhotos.map((productPhoto, key) => (
+                <SmallImage
+                  src={productPhoto.img}
+                  onClick={() => setImgNo(key)}
+                />
+              ))}
             </Stack>
           </Grid>
           <Grid item xs={10}>
             {/* image */}
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <LargeImage src="https://rukminim1.flixcart.com/image/150/150/kapoo7k0/electric-kettle/p/6/s/pigeon-favourite-original-imafs7xhj5uwgrh4.jpeg?q=70" />
+              <LargeImage src={productPhotos[imgNo].img} />
             </Box>
           </Grid>
         </Grid>
@@ -80,7 +81,7 @@ export const SideProduct = (props) => {
           ml={14}
         >
           <Typography sx={{ color: "#878787", fontSize: 14 }}>
-            seller : store Name
+            seller : {product.createdBy}
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center" }} mt={1} mb={1}>
             <IconButton aria-label="delete">

@@ -38,23 +38,26 @@ export default (state = initState, action) => {
       };
       break;
 
-    // case productConstants.FORGOT_REQUEST:
-    //   state = {
-    //     ...state,
-    //   };
-    //   break;
-    // case productConstants.FORGOT_SUCCESS:
-    //   state = {
-    //     ...state,
-    //     message: "Email sent successfully",
-    //   };
-    //   break;
-    // case productConstants.FORGOT_FAILURE:
-    //   state = {
-    //     ...state,
-    //     error: action.payload.error,
-    //   };
-    //   break;
+    case productConstants.GET_PRODUCTS_BY_ID_REQUEST:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case productConstants.GET_PRODUCTS_BY_ID_SUCCESS:
+      state = {
+        ...state,
+        product: action.payload.product,
+        loading: false,
+      };
+      break;
+    case productConstants.GET_PRODUCTS_BY_ID_FAILURE:
+      state = {
+        ...state,
+        error: action.payload.error,
+        loading: false,
+      };
+      break;
 
     // case productConstants.RESET_REQUEST:
     //   state = {
