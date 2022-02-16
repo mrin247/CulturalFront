@@ -12,13 +12,17 @@ const Image = styled("img")(({ theme }) => ({
   height: "40vh",
 }));
 
-export const ProductCard = (props) => {
+export const ProductCard = ({ product }) => {
+  const imageSrc =
+    product.productPhotos.length > 0
+      ? product.productPhotos[0].img
+      : "https://rukminim1.flixcart.com/image/150/150/kapoo7k0/electric-kettle/p/6/s/pigeon-favourite-original-imafs7xhj5uwgrh4.jpeg?q=70";
   return (
     <Paper elevatiion={24} sx={{ cursor: "pointer" }}>
       <Box p={1}>
         <Box sx={{ textAlign: "center" }}>
           <Box p={1}>
-            <Image src="https://rukminim1.flixcart.com/image/150/150/kapoo7k0/electric-kettle/p/6/s/pigeon-favourite-original-imafs7xhj5uwgrh4.jpeg?q=70" />
+            <Image src={imageSrc} />
           </Box>
         </Box>
         <Box m={1}>
@@ -26,7 +30,7 @@ export const ProductCard = (props) => {
             Seller name
           </Typography>
           <Typography sx={{ fontSize: "16px", fontWeight: 600 }}>
-            Product name
+            {product.name}
           </Typography>
           <Box sx={{ display: "flex", textAllign: "center" }}>
             <Typography
@@ -53,7 +57,7 @@ export const ProductCard = (props) => {
             <Box sx={{ display: "flex", textAllign: "center" }}>
               <CurrencyRupeeIcon fontSize="inherit" />
               <Typography sx={{ fontSize: "16px", fontWeight: 600 }}>
-                Price
+                {product.price}
               </Typography>
             </Box>
 

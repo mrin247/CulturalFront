@@ -15,7 +15,8 @@ import { ProductCard } from "../../components/Product-Card";
 import { SideFilter } from "../../components/Side-Filter";
 import { SideSummary } from "../../components/SideSummary";
 import { StoreLists } from "../../components/StoreLists";
-import { StoreSlide } from "../../components/StoreSlide";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductsByCategory } from "../../actions/productActions";
 
 /**
  * @author
@@ -23,6 +24,13 @@ import { StoreSlide } from "../../components/StoreSlide";
  **/
 
 export const HomeNeedsPage = (props) => {
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.product.products);
+
+  React.useEffect(() => {
+    dispatch(getProductsByCategory("Home Needs"));
+  }, []);
+  //console.log(products);
   return (
     <Layout>
       <NavbarProduct />
@@ -38,21 +46,11 @@ export const HomeNeedsPage = (props) => {
             </Box>
             <Box mb={2}>
               <Grid container spacing={1}>
-                <Grid item xs={3}>
-                  <ProductCard />
-                </Grid>
-                <Grid item xs={3}>
-                  <ProductCard />
-                </Grid>
-                <Grid item xs={3}>
-                  <ProductCard />
-                </Grid>
-                <Grid item xs={3}>
-                  <ProductCard />
-                </Grid>
-                <Grid item xs={3}>
-                  <ProductCard />
-                </Grid>
+                {products.map((product) => (
+                  <Grid item xs={3}>
+                    <ProductCard product={product} />
+                  </Grid>
+                ))}
               </Grid>
             </Box>
           </Grid>
