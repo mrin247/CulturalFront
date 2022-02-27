@@ -24,6 +24,7 @@ import { ToysPage } from "./pages/toysPage";
 import { TravelPage } from "./pages/travelPage";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserLoggedIn } from "./actions/authActions";
+import { updateCart } from "./actions/cartActions";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,12 @@ function App() {
       dispatch(isUserLoggedIn());
     }
   }, [auth.authenticate]);
+
+  // useEffect(() => {
+  //   console.log("App.js - updateCart");
+  //   dispatch(updateCart());
+  // }, [auth.authenticate]);
+
   return (
     <Router>
       <Fragment>

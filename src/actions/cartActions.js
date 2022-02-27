@@ -21,7 +21,7 @@ const getCartItems = () => {
       console.log(error);
       dispatch({
         type: cartConstants.GET_CART_FAILURE,
-        error: { error },
+        payload: { error },
       });
     }
   };
@@ -39,9 +39,11 @@ export const addToCart = (product, newQty = 1) => {
     const qty = cartItems[product._id]
       ? parseInt(cartItems[product._id].qty + newQty)
       : 1;
+
     cartItems[product._id] = {
       ...product,
       qty,
+      seller: product.createdBy,
     };
 
     if (auth.authenticate) {
@@ -68,7 +70,7 @@ export const addToCart = (product, newQty = 1) => {
         dispatch(getCartItems());
       }
     } else {
-      localStorage.setItem("cart", JSON.stringify(cartItems));
+      localStorage.setItem("cart", JSON.stringify(cartItems[product._id]));
     }
 
     console.log("addToCart::", cartItems);
@@ -101,45 +103,48 @@ export const removeCartItem = (payload) => {
   };
 };
 
-export const updateCart = () => {
-  return async (dispatch) => {
-    const { auth } = store.getState();
-    let cartItems = localStorage.getItem("cart")
-      ? JSON.parse(localStorage.getItem("cart"))
-      : null;
+// export const updateCart = () => {
+//   return async (dispatch) => {
+//     const { auth } = store.getState();
+//     let cartItems = localStorage.getItem("cart")
+//       ? JSON.parse(localStorage.getItem("cart"))
+//       : null;
 
-    console.log("upppppppppp");
+    
 
-    if (auth.authenticate) {
-      localStorage.removeItem("cart");
-      //dispatch(getCartItems());
-      if (cartItems) {
-        const payload = {
-          cartItems: Object.keys(cartItems).map((key, index) => {
-            return {
-              quantity: cartItems[key].qty,
-              product: cartItems[key]._id,
-            };
-          }),
-        };
-        if (Object.keys(cartItems).length > 0) {
-          const res = await axios.post(`/client/cart/addtocart`, payload);
-          if (res.status === 201) {
-            dispatch(getCartItems());
-          }
-        }
-      } else {
-        dispatch(getCartItems());
-      }
-    } else {
-      if (cartItems) {
-        dispatch({
-          type: cartConstants.ADD_TO_CART_SUCCESS,
-          payload: { cartItems },
-        });
-      }
-    }
-  };
-};
+//     if (auth.authenticate) {
+//       localStorage.removeItem("cart");
+//       console.log("upppppppppp");
+//       //dispatch(getCartItems());
+//       if (cartItems) {
+//         const payload = {
+//           cartItems: Object.keys(cartItems).map((key, index) => {
+//             return {
+//               quantity: cartItems[key].qty,
+//               product: cartItems[key]._id,
+//               seller: cartItems[key].createdBy,
+//             };
+//           }),
+//         };
+//         console.log(cartItems);
+//         if (Object.keys(cartItems).length > 0) {
+//           const res = await axios.post(`/client/cart/addtocart`, payload);
+//           if (res.status === 201) {
+//             dispatch(getCartItems());
+//           }
+//         }
+//       } else {
+//         dispatch(getCartItems());
+//       }
+//     } else {
+//       if (cartItems) {
+//         dispatch({
+//           type: cartConstants.ADD_TO_CART_SUCCESS,
+//           payload: { cartItems },
+//         });
+//       }
+//     }
+//   };
+// };
 
 export { getCartItems };

@@ -76,59 +76,31 @@ export const CartPage = (props) => {
                   ))}
 
                   <Box p={2} sx={{ textAlign: "center", display: "flex" }}>
-                    {cartItems.length > 0 ? (
-                      <Button
-                        sx={{
+                    <Button
+                      sx={{
+                        color: "white",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        marginRight: "5px",
+                        marginLeft: "auto",
+                        padding: "10px 50px 10px 50px",
+                        backgroundColor: "rgb(169 129 45)",
+                        "&:hover": {
                           color: "white",
-                          fontSize: "14px",
-                          fontWeight: "500",
-                          marginRight: "5px",
-                          marginLeft: "auto",
-                          padding: "10px 50px 10px 50px",
                           backgroundColor: "rgb(169 129 45)",
-                          "&:hover": {
-                            color: "white",
-                            backgroundColor: "rgb(169 129 45)",
-                          },
-                          "&:active": {
-                            color: "white",
-                            backgroundColor: "rgb(169 129 45)",
-                          },
-                          "&:focus": {
-                            color: "white",
-                            backgroundColor: "rgb(169 129 45)",
-                          },
-                        }}
-                      >
-                        Place order
-                      </Button>
-                    ) : (
-                      <Button
-                        sx={{
+                        },
+                        "&:active": {
                           color: "white",
-                          fontSize: "14px",
-                          fontWeight: "500",
-                          marginRight: "5px",
-                          marginLeft: "auto",
-                          padding: "10px 50px 10px 50px",
                           backgroundColor: "rgb(169 129 45)",
-                          "&:hover": {
-                            color: "white",
-                            backgroundColor: "rgb(169 129 45)",
-                          },
-                          "&:active": {
-                            color: "white",
-                            backgroundColor: "rgb(169 129 45)",
-                          },
-                          "&:focus": {
-                            color: "white",
-                            backgroundColor: "rgb(169 129 45)",
-                          },
-                        }}
-                      >
-                        Shop Now
-                      </Button>
-                    )}
+                        },
+                        "&:focus": {
+                          color: "white",
+                          backgroundColor: "rgb(169 129 45)",
+                        },
+                      }}
+                    >
+                      Place order
+                    </Button>
                   </Box>
                 </Box>
               </Paper>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import CurrencyRupeeRoundedIcon from "@mui/icons-material/CurrencyRupeeRounded";
@@ -19,6 +20,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { addToCart } from "../../actions/cartActions";
+import { useNavigate } from "react-router-dom";
 /**
  * @author
  * @function SideSummary
@@ -42,13 +45,25 @@ const useStyle = makeStyles({
     height: 2,
     width: 55,
     fontSize: 14,
+    textAlign: "center",
+    justifyContent: "center",
   },
 });
 
 export const SideProduct = ({ product }) => {
   const classes = useStyle();
   const [imgNo, setImgNo] = useState(0);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const productPhotos = product.productPhotos;
+
+  const addProductToCart = () => {
+    const _product = {
+      ...product,
+      seller: product.createdBy,
+    };
+    dispatch(addToCart(_product)).then(navigate("/cart"));
+  };
 
   return (
     <Box position={"fixed"} sx={{ width: "80vh" }}>
@@ -83,28 +98,15 @@ export const SideProduct = ({ product }) => {
           <Typography sx={{ color: "#878787", fontSize: 14 }}>
             seller : {product.createdBy}
           </Typography>
-          <Box sx={{ display: "flex", alignItems: "center" }} mt={1} mb={1}>
-            <IconButton aria-label="delete">
-              <RemoveRoundedIcon
-                sx={{ border: "1px solid black", borderRadius: "50%" }}
-              />
-            </IconButton>
-            <TextField
-              variant="outlined"
-              InputProps={{ classes: { input: classes.input1 } }}
-            />
-            <IconButton aria-label="add">
-              <AddRoundedIcon
-                sx={{ border: "1px solid black", borderRadius: "50%" }}
-              />
-            </IconButton>
-          </Box>
+
           <Box
             sx={{
               display: "inline-block",
               allignItems: "center",
             }}
             mr={2}
+            mt={1}
+            mb={1}
           >
             <IconButton aria-label="delete" size="medium" sx={{ color: "red" }}>
               <FavoriteIcon fontSize="inherit" />
@@ -138,6 +140,7 @@ export const SideProduct = ({ product }) => {
                   backgroundColor: "rgb(169 102 45)",
                 },
               }}
+              onClick={addProductToCart}
             >
               Add to Cart
             </Button>
