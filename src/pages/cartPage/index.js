@@ -1,11 +1,17 @@
 import { Box, Button, Container, Grid, Paper } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { CardProduct } from "../../components/CartProduct";
 import { Layout } from "../../components/Layout";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import CurrencyRupeeRoundedIcon from "@mui/icons-material/CurrencyRupeeRounded";
 import { SideSummary } from "../../components/SideSummary";
+import {
+  addToCart,
+  getCartItems,
+  removeCartItem,
+} from "../../actions/cartActions";
 
 /**
  * @author
@@ -13,6 +19,38 @@ import { SideSummary } from "../../components/SideSummary";
  **/
 
 export const CartPage = (props) => {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const cart = useSelector((state) => state.cart);
+
+  const [cartItems, setCartItems] = useState(cart.cartItems);
+
+  useEffect(() => {
+    setCartItems(cart.cartItems);
+  }, [cart.cartItems]);
+
+  useEffect(() => {
+    if (auth.authenticate) {
+      dispatch(getCartItems());
+    }
+  }, [auth.authenticate]);
+  //console.log(cart.cartItems);
+
+  const onQuantityIncrement = (_id, qty) => {
+    //console.log({_id, qty});
+    const { name, price, img, seller } = cartItems[_id];
+    dispatch(addToCart({ _id, name, price, img, seller }, 1));
+  };
+
+  const onQuantityDecrement = (_id, qty) => {
+    const { name, price, img, seller } = cartItems[_id];
+    dispatch(addToCart({ _id, name, price, img, seller }, -1));
+  };
+
+  const onRemoveCartItem = (_id) => {
+    dispatch(removeCartItem({ productId: _id }));
+  };
+
   return (
     <Layout>
       <Container maxWidth="xl">
@@ -27,35 +65,70 @@ export const CartPage = (props) => {
                     </Typography>
                   </Box>
                   <Divider />
-                  <CardProduct />
-                  <CardProduct />
+                  {Object.keys(cartItems).map((key, index) => (
+                    <CardProduct
+                      key={index}
+                      cartItem={cartItems[key]}
+                      onQuantityInc={onQuantityIncrement}
+                      onQuantityDec={onQuantityDecrement}
+                      onRemoveCartItem={onRemoveCartItem}
+                    />
+                  ))}
 
                   <Box p={2} sx={{ textAlign: "center", display: "flex" }}>
-                    <Button
-                      sx={{
-                        color: "white",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                        marginRight: "5px",
-                        marginLeft: "auto",
-                        padding: "10px 50px 10px 50px",
-                        backgroundColor: "rgb(169 129 45)",
-                        "&:hover": {
+                    {cartItems.length > 0 ? (
+                      <Button
+                        sx={{
                           color: "white",
+                          fontSize: "14px",
+                          fontWeight: "500",
+                          marginRight: "5px",
+                          marginLeft: "auto",
+                          padding: "10px 50px 10px 50px",
                           backgroundColor: "rgb(169 129 45)",
-                        },
-                        "&:active": {
+                          "&:hover": {
+                            color: "white",
+                            backgroundColor: "rgb(169 129 45)",
+                          },
+                          "&:active": {
+                            color: "white",
+                            backgroundColor: "rgb(169 129 45)",
+                          },
+                          "&:focus": {
+                            color: "white",
+                            backgroundColor: "rgb(169 129 45)",
+                          },
+                        }}
+                      >
+                        Place order
+                      </Button>
+                    ) : (
+                      <Button
+                        sx={{
                           color: "white",
+                          fontSize: "14px",
+                          fontWeight: "500",
+                          marginRight: "5px",
+                          marginLeft: "auto",
+                          padding: "10px 50px 10px 50px",
                           backgroundColor: "rgb(169 129 45)",
-                        },
-                        "&:focus": {
-                          color: "white",
-                          backgroundColor: "rgb(169 129 45)",
-                        },
-                      }}
-                    >
-                      Place order
-                    </Button>
+                          "&:hover": {
+                            color: "white",
+                            backgroundColor: "rgb(169 129 45)",
+                          },
+                          "&:active": {
+                            color: "white",
+                            backgroundColor: "rgb(169 129 45)",
+                          },
+                          "&:focus": {
+                            color: "white",
+                            backgroundColor: "rgb(169 129 45)",
+                          },
+                        }}
+                      >
+                        Shop Now
+                      </Button>
+                    )}
                   </Box>
                 </Box>
               </Paper>
