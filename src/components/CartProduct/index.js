@@ -78,7 +78,12 @@ export const CardProduct = (props) => {
         <Box sx={{ display: "flex" }}>
           <Grid container spacing={1}>
             <Grid item xs={2}>
-              <img className={classes.img} src={cartItem.img} />
+              <img
+                className={classes.img}
+                src={
+                  cartItem.img ? cartItem.img : cartItem.productPhotos[0].img
+                }
+              />
               {/* <img src="https://rukminim1.flixcart.com/image/150/150/kapoo7k0/electric-kettle/p/6/s/pigeon-favourite-original-imafs7xhj5uwgrh4.jpeg?q=70" /> */}
             </Grid>
             <Grid item xs={6}>
