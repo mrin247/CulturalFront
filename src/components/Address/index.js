@@ -1,6 +1,8 @@
 import { Box, Button, Checkbox, Divider, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import HomeIcon from "@mui/icons-material/Home";
+import EditIcon from "@mui/icons-material/Edit";
+import BusinessIcon from "@mui/icons-material/Business";
 
 /**
  * @author
@@ -9,31 +11,39 @@ import HomeIcon from "@mui/icons-material/Home";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export const Address = (props) => {
+  const [checked, setChecked] = useState(false);
+  const address = props.address;
   return (
     <Box sx={{ display: "flex", cursor: "pointer" }} ml={6}>
       <Box>
-        <Checkbox {...label} color="secondary"/>
+        <Checkbox {...label} color="secondary" checked={checked} />
       </Box>
       <Box>
-        <Box sx={{ display: "flex", textAlign: "center" }}>
+        <Box sx={{ display: "flex", textAlign: "center", fontSize: "14px" }}>
           <Typography pt={1} pl={1} sx={{ fontSize: "14px", fontWeight: 600 }}>
-            Mrinmoy Mondal
+            {address.name}
+          </Typography>
+
+          <Typography pt={1} pl={1} sx={{ fontSize: "14px" }}>
+            {address.mobileNumber}
           </Typography>
           <Box pt={1} pl={1} pr={1}>
-            <HomeIcon />
+            {address.addressType === "Home" ? <HomeIcon /> : <BusinessIcon />}
           </Box>
-
-          <Typography pt={1} sx={{ fontSize: "14px" }}>
-            8116360121
-          </Typography>
+          <Box pt={1} pl={1} pr={1} sx={{ marginLeft: "auto" }}>
+            <EditIcon fontSize="inherit" />
+          </Box>
         </Box>
         <Box sx={{ display: "flex" }} pl={1} pb={1}>
-          <Typography sx={{ fontSize: "14px" }}>Monoharbohal</Typography>
-          <Typography sx={{ fontSize: "14px" }}>, Near laxmi mandir</Typography>
-          <Typography sx={{ fontSize: "14px" }}>, asansol</Typography>
-          <Typography sx={{ fontSize: "14px" }}>, Mondal House</Typography>
-          <Typography sx={{ fontSize: "14px" }}>, West Bengal</Typography>
-          <Typography sx={{ fontSize: "14px" }}>-713359</Typography>
+          <Typography sx={{ fontSize: "14px" }}>{address.address}</Typography>
+          <Typography sx={{ fontSize: "14px" }}>
+            , {address.locality}
+          </Typography>
+          <Typography sx={{ fontSize: "14px" }}>
+            , {address.cityDistrictTown}
+          </Typography>
+          <Typography sx={{ fontSize: "14px" }}>-{address.pinCode}</Typography>
+          <Typography sx={{ fontSize: "14px" }}>, {address.state}</Typography>
         </Box>
         <Button
           variant="contained"

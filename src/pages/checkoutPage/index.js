@@ -9,15 +9,23 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/styles";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "../../components/Layout";
 import { SideSummary } from "../../components/SideSummary";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import StarIcon from "@mui/icons-material/Star";
+
 import { Address } from "../../components/Address";
 import { AddressModal } from "../../components/AddressModal";
 import { CardProduct } from "../../components/CartProduct";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  getCartItems,
+  removeCartItem,
+} from "../../actions/cartActions";
+import { getAddress } from "../../actions/addressActions";
 /**
  * @author
  * @function CheckoutPage
@@ -42,6 +50,50 @@ const StyledContinueButton = styled(Button)(({ theme }) => ({
 
 export const CheckoutPage = (props) => {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const cart = useSelector((state) => state.cart);
+  const address = useSelector((state) => state.address);
+
+  const [cartItems, setCartItems] = useState(cart.cartItems);
+  const [addresses, setAddresses] = useState(address.address);
+
+  useEffect(() => {
+    setCartItems(cart.cartItems);
+  }, [cart.cartItems]);
+
+  useEffect(() => {
+    setAddresses(address.address);
+  }, [address.address]);
+
+  useEffect(() => {
+    if (auth.authenticate) {
+      dispatch(getCartItems());
+    }
+  }, [auth.authenticate]);
+
+  useEffect(() => {
+    if (auth.authenticate) {
+      dispatch(getAddress());
+    }
+  }, [auth.authenticate]);
+
+  console.log(addresses);
+
+  const onQuantityIncrement = (_id, qty) => {
+    //console.log({_id, qty});
+    const { name, price, img, seller } = cartItems[_id];
+    dispatch(addToCart({ _id, name, price, img, seller }, 1));
+  };
+
+  const onQuantityDecrement = (_id, qty) => {
+    const { name, price, img, seller } = cartItems[_id];
+    dispatch(addToCart({ _id, name, price, img, seller }, -1));
+  };
+
+  const onRemoveCartItem = (_id) => {
+    dispatch(removeCartItem({ productId: _id }));
+  };
   return (
     <Layout>
       <Container maxWidth="xl">
@@ -94,148 +146,150 @@ export const CheckoutPage = (props) => {
                             </Button>
                           </Box>
                         </Box>
-
-                        <Box
-                          sx={{
-                            display: "flex",
-                            color: "black",
-                            textAlign: "center",
-                          }}
-                        >
-                          <Typography
-                            ml={6}
-                            pr={1}
-                            sx={{ fontSize: "14px", fontWeight: 600 }}
+                        {auth.authenticate ? (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              color: "black",
+                              textAlign: "center",
+                            }}
                           >
-                            Mrinmoy Mondal
-                          </Typography>
-                          <Typography sx={{ fontSize: "14px" }}>
-                            mm455575@gmail.com
-                          </Typography>
-                        </Box>
-                        <Box ml={6} mt={2}>
-                          <Grid container spacing={2}>
-                            <Box pl={2} pr={2}>
-                              <Grid item xs={8}>
-                                <TextField
-                                  fullWidth
-                                  id="standard-basic"
-                                  label="Email Address"
-                                  variant="standard"
-                                  color="secondary"
-                                />
-                                <TextField
-                                  fullWidth
-                                  id="standard-password-input"
-                                  label="Password"
-                                  type="password"
-                                  autoComplete="current-password"
-                                  variant="standard"
-                                  color="secondary"
-                                />
-                                <Typography
-                                  sx={{
-                                    fontSize: "14px",
-                                    fontWeight: 600,
-                                    color: "#a9812d",
-                                    cursor: "pointer",
-                                    display: "flex",
-                                    justifyContent: "center",
-                                  }}
-                                  mt={2}
-                                >
-                                  Logout & Signin with another account
-                                </Typography>
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                  }}
-                                  pt={2}
-                                >
-                                  <StyledContinueButton>
-                                    Continue
-                                  </StyledContinueButton>
+                            <Typography
+                              ml={6}
+                              pr={1}
+                              sx={{ fontSize: "14px", fontWeight: 600 }}
+                            >
+                              Mrinmoy Mondal
+                            </Typography>
+                            <Typography sx={{ fontSize: "14px" }}>
+                              mm455575@gmail.com
+                            </Typography>
+                          </Box>
+                        ) : (
+                          <Box ml={6} mt={2}>
+                            <Grid container spacing={2}>
+                              <Box pl={2} pr={2}>
+                                <Grid item xs={8}>
+                                  <TextField
+                                    fullWidth
+                                    id="standard-basic"
+                                    label="Email Address"
+                                    variant="standard"
+                                    color="secondary"
+                                  />
+                                  <TextField
+                                    fullWidth
+                                    id="standard-password-input"
+                                    label="Password"
+                                    type="password"
+                                    autoComplete="current-password"
+                                    variant="standard"
+                                    color="secondary"
+                                  />
+                                  <Typography
+                                    sx={{
+                                      fontSize: "14px",
+                                      fontWeight: 600,
+                                      color: "#a9812d",
+                                      cursor: "pointer",
+                                      display: "flex",
+                                      justifyContent: "center",
+                                    }}
+                                    mt={2}
+                                  >
+                                    Logout & Signin with another account
+                                  </Typography>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                    }}
+                                    pt={2}
+                                  >
+                                    <StyledContinueButton>
+                                      Continue
+                                    </StyledContinueButton>
+                                  </Box>
+                                </Grid>
+                              </Box>
+
+                              <Grid item xs={4}>
+                                <Box>
+                                  <Typography
+                                    sx={{
+                                      color: "##000000c9",
+                                      fontSize: 16,
+                                      fontWeight: 100,
+                                    }}
+                                    mb={2}
+                                  >
+                                    Advantages of secure login
+                                  </Typography>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      textAllign: "center",
+                                      color: "#a9812d",
+                                    }}
+                                  >
+                                    <LocalShippingIcon />
+                                    <Typography
+                                      sx={{
+                                        color: "#a9812d",
+                                        fontSize: 14,
+                                        fontWeight: 100,
+                                      }}
+                                      pb={1}
+                                      ml={1}
+                                    >
+                                      Easily track orders.
+                                    </Typography>
+                                  </Box>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      textAllign: "center",
+                                      color: "#a9812d",
+                                    }}
+                                  >
+                                    <CampaignIcon />
+                                    <Typography
+                                      sx={{
+                                        color: "#a9812d",
+                                        fontSize: 14,
+                                        fontWeight: 100,
+                                      }}
+                                      pb={1}
+                                      ml={1}
+                                    >
+                                      Explore State Feed.
+                                    </Typography>
+                                  </Box>
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      textAllign: "center",
+                                      color: "#a9812d",
+                                    }}
+                                  >
+                                    <StarIcon />
+                                    <Typography
+                                      sx={{
+                                        color: "#a9812d",
+                                        fontSize: 14,
+                                        fontWeight: 100,
+                                      }}
+                                      pb={1}
+                                      ml={1}
+                                    >
+                                      Reviews, Ratings and more.
+                                    </Typography>
+                                  </Box>
                                 </Box>
                               </Grid>
-                            </Box>
-
-                            <Grid item xs={4}>
-                              <Box>
-                                <Typography
-                                  sx={{
-                                    color: "##000000c9",
-                                    fontSize: 16,
-                                    fontWeight: 100,
-                                  }}
-                                  mb={2}
-                                >
-                                  Advantages of secure login
-                                </Typography>
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    textAllign: "center",
-                                    color: "#a9812d",
-                                  }}
-                                >
-                                  <LocalShippingIcon />
-                                  <Typography
-                                    sx={{
-                                      color: "#a9812d",
-                                      fontSize: 14,
-                                      fontWeight: 100,
-                                    }}
-                                    pb={1}
-                                    ml={1}
-                                  >
-                                    Easily track orders.
-                                  </Typography>
-                                </Box>
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    textAllign: "center",
-                                    color: "#a9812d",
-                                  }}
-                                >
-                                  <CampaignIcon />
-                                  <Typography
-                                    sx={{
-                                      color: "#a9812d",
-                                      fontSize: 14,
-                                      fontWeight: 100,
-                                    }}
-                                    pb={1}
-                                    ml={1}
-                                  >
-                                    Explore State Feed.
-                                  </Typography>
-                                </Box>
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    textAllign: "center",
-                                    color: "#a9812d",
-                                  }}
-                                >
-                                  <StarIcon />
-                                  <Typography
-                                    sx={{
-                                      color: "#a9812d",
-                                      fontSize: 14,
-                                      fontWeight: 100,
-                                    }}
-                                    pb={1}
-                                    ml={1}
-                                  >
-                                    Reviews, Ratings and more.
-                                  </Typography>
-                                </Box>
-                              </Box>
                             </Grid>
-                          </Grid>
-                        </Box>
+                          </Box>
+                        )}
                       </Box>
                     </Box>
                   </Paper>
@@ -293,9 +347,11 @@ export const CheckoutPage = (props) => {
                           </Box>
                         </Box>
                         <Box sx={{ cursor: "pointer" }}>
-                          <Address />
-                          <Divider />
-                          <Address />
+                          {addresses.address ? (
+                            addresses.address.map((add) => <Address address={add}/>)
+                          ) : (
+                            <></>
+                          )}
                         </Box>
                       </Box>
                     </Box>
@@ -314,8 +370,15 @@ export const CheckoutPage = (props) => {
                         </Typography>
                         <Typography pl={2}>ORDER SUMMARY</Typography>
                       </Box>
-                      <CardProduct />
-                      <CardProduct />
+                      {Object.keys(cartItems).map((key, index) => (
+                        <CardProduct
+                          key={index}
+                          cartItem={cartItems[key]}
+                          onQuantityInc={onQuantityIncrement}
+                          onQuantityDec={onQuantityDecrement}
+                          onRemoveCartItem={onRemoveCartItem}
+                        />
+                      ))}
                       <Box sx={{ display: "flex" }}>
                         <Box sx={{ marginLeft: "auto" }} p={2}>
                           <StyledContinueButton>Continue</StyledContinueButton>

@@ -44,11 +44,7 @@ function App() {
     <Router>
       <Fragment>
         <Routes>
-          
-
-          <Route exact path="/checkout" element={<PrivateRoute />}>
-            <Route exact path="/checkout" element={<CheckoutPage />} />
-          </Route>
+          <Route exact path="/checkout" element={<CheckoutPage />} />
 
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/cart" element={<CartPage />} />
