@@ -26,6 +26,7 @@ import {
   removeCartItem,
 } from "../../actions/cartActions";
 import { getAddress } from "../../actions/addressActions";
+import { signin } from "../../actions/authActions";
 /**
  * @author
  * @function CheckoutPage
@@ -58,6 +59,19 @@ export const CheckoutPage = (props) => {
   const [cartItems, setCartItems] = useState(cart.cartItems);
   const [addresses, setAddresses] = useState(address.address);
 
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const [addressStep, setAddressStep] = useState(false);
+  const [orderStep, setOrderStep] = useState(false);
+  const [paymentStep, setPaymentStep] = useState(false);
+
+  const [addressSummary, setAddressSummary] = useState();
+  const [orderSummary, setOrderSummary] = useState();
+  const [paymentSummary, setPaymentSummary] = useState();
+
+  console.log(addressSummary);
+
   useEffect(() => {
     setCartItems(cart.cartItems);
   }, [cart.cartItems]);
@@ -68,13 +82,8 @@ export const CheckoutPage = (props) => {
 
   useEffect(() => {
     if (auth.authenticate) {
+      dispatch(getAddress()).then(setAddressStep(true));
       dispatch(getCartItems());
-    }
-  }, [auth.authenticate]);
-
-  useEffect(() => {
-    if (auth.authenticate) {
-      dispatch(getAddress());
     }
   }, [auth.authenticate]);
 
@@ -94,6 +103,17 @@ export const CheckoutPage = (props) => {
   const onRemoveCartItem = (_id) => {
     dispatch(removeCartItem({ productId: _id }));
   };
+
+  const clientLogin = () => {
+    let user;
+    if (email && password) {
+      user = { email, password };
+      dispatch(signin(user));
+    } else {
+      alert("Please type your email & password");
+    }
+  };
+
   return (
     <Layout>
       <Container maxWidth="xl">
@@ -176,6 +196,7 @@ export const CheckoutPage = (props) => {
                                     label="Email Address"
                                     variant="standard"
                                     color="secondary"
+                                    onChange={(e) => setEmail(e.target.value)}
                                   />
                                   <TextField
                                     fullWidth
@@ -185,20 +206,11 @@ export const CheckoutPage = (props) => {
                                     autoComplete="current-password"
                                     variant="standard"
                                     color="secondary"
+                                    onChange={(e) =>
+                                      setPassword(e.target.value)
+                                    }
                                   />
-                                  <Typography
-                                    sx={{
-                                      fontSize: "14px",
-                                      fontWeight: 600,
-                                      color: "#a9812d",
-                                      cursor: "pointer",
-                                      display: "flex",
-                                      justifyContent: "center",
-                                    }}
-                                    mt={2}
-                                  >
-                                    Logout & Signin with another account
-                                  </Typography>
+
                                   <Box
                                     sx={{
                                       display: "flex",
@@ -206,7 +218,7 @@ export const CheckoutPage = (props) => {
                                     }}
                                     pt={2}
                                   >
-                                    <StyledContinueButton>
+                                    <StyledContinueButton onClick={clientLogin}>
                                       Continue
                                     </StyledContinueButton>
                                   </Box>
@@ -314,49 +326,71 @@ export const CheckoutPage = (props) => {
                             2
                           </Typography>
                           <Typography pl={2}>DELIVERY ADDRESS</Typography>
-                          <Box sx={{ marginLeft: "auto" }}>
-                            <Button
-                              variant="outlined"
-                              size="small"
-                              sx={{
-                                boxShadow: "none",
-                                border: "1px solid",
-                                color: "#a9812d",
-                                fontSize: "12px",
-                                fontWeight: "600",
+                          {addressStep && (
+                            <Box sx={{ marginLeft: "auto" }}>
+                              <Button
+                                variant="outlined"
+                                size="small"
+                                sx={{
+                                  boxShadow: "none",
+                                  border: "1px solid",
+                                  color: "#a9812d",
+                                  fontSize: "12px",
+                                  fontWeight: "600",
 
-                                "&:hover": {
-                                  border: "1px solid",
-                                  boxShadow: "none",
-                                },
-                                "&:active": {
-                                  boxShadow: "none",
-                                  border: "1px solid",
-                                  backgroundColor: "#ffffff",
-                                },
-                              }}
-                              onClick={() => setOpen(true)}
-                              onClose={() => setOpen(false)}
-                            >
-                              Add
-                            </Button>
-                            <AddressModal
-                              open={open}
-                              close={() => setOpen(false)}
-                            />
-                          </Box>
-                        </Box>
-                        <Box sx={{ cursor: "pointer" }}>
-                          {addresses.address ? (
-                            addresses.address.map((add) => <Address address={add}/>)
-                          ) : (
-                            <></>
+                                  "&:hover": {
+                                    border: "1px solid",
+                                    boxShadow: "none",
+                                  },
+                                  "&:active": {
+                                    boxShadow: "none",
+                                    border: "1px solid",
+                                    backgroundColor: "#ffffff",
+                                  },
+                                }}
+                                onClick={() => setOpen(true)}
+                                onClose={() => setOpen(false)}
+                              >
+                                Add
+                              </Button>
+                              <AddressModal
+                                open={open}
+                                close={() => setOpen(false)}
+                              />
+                            </Box>
+                          )}
+                          {addressSummary && orderStep && (
+                            <Box sx={{ marginLeft: "auto" }}>
+                              <Typography
+                                pt={1}
+                                pl={1}
+                                sx={{ fontSize: "12px", color: "#a9812d", fontWeight: 600 }}
+                              >
+                                Order will deliver to {addressSummary.name},{" "}
+                                {addressSummary.mobileNumber}
+                              </Typography>
+                            </Box>
                           )}
                         </Box>
+                        {addressStep && (
+                          <Box sx={{ cursor: "pointer" }}>
+                            {addresses.address ? (
+                              <Address
+                                address={addresses.address}
+                                setOrderStep={setOrderStep}
+                                setAddressSummary={setAddressSummary}
+                                setAddressStep={setAddressStep}
+                              />
+                            ) : (
+                              <></>
+                            )}
+                          </Box>
+                        )}
                       </Box>
                     </Box>
                   </Paper>
                 </Grid>
+
                 <Grid item xs={12}>
                   <Paper elevation={3}>
                     <Box sx={{ backgroundColor: "#f1f3f6" }}>
@@ -370,23 +404,32 @@ export const CheckoutPage = (props) => {
                         </Typography>
                         <Typography pl={2}>ORDER SUMMARY</Typography>
                       </Box>
-                      {Object.keys(cartItems).map((key, index) => (
-                        <CardProduct
-                          key={index}
-                          cartItem={cartItems[key]}
-                          onQuantityInc={onQuantityIncrement}
-                          onQuantityDec={onQuantityDecrement}
-                          onRemoveCartItem={onRemoveCartItem}
-                        />
-                      ))}
-                      <Box sx={{ display: "flex" }}>
-                        <Box sx={{ marginLeft: "auto" }} p={2}>
-                          <StyledContinueButton>Continue</StyledContinueButton>
+                      {orderStep && (
+                        <Box>
+                          <Box>
+                            {Object.keys(cartItems).map((key, index) => (
+                              <CardProduct
+                                key={index}
+                                cartItem={cartItems[key]}
+                                onQuantityInc={onQuantityIncrement}
+                                onQuantityDec={onQuantityDecrement}
+                                onRemoveCartItem={onRemoveCartItem}
+                              />
+                            ))}
+                          </Box>
+                          <Box sx={{ display: "flex" }}>
+                            <Box sx={{ marginLeft: "auto" }} p={2}>
+                              <StyledContinueButton>
+                                Continue
+                              </StyledContinueButton>
+                            </Box>
+                          </Box>
                         </Box>
-                      </Box>
+                      )}
                     </Box>
                   </Paper>
                 </Grid>
+
                 <Grid item xs={12}>
                   <Paper elevation={3}>
                     <Box sx={{ backgroundColor: "#f1f3f6" }}>
