@@ -46,7 +46,7 @@ export const createAddress = (payload) => {
           type: addressConstants.ADD_ADDRESS_SUCCESS,
           payload: { address: res.data.address },
         });
-        
+        dispatch(getAddress());
       } else {
         const { error } = res.data;
         dispatch({

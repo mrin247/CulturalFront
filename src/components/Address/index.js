@@ -1,8 +1,16 @@
-import { Box, Button, Checkbox, Divider, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Divider,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import EditIcon from "@mui/icons-material/Edit";
 import BusinessIcon from "@mui/icons-material/Business";
+import { AddressModal } from "../AddressModal";
 
 /**
  * @author
@@ -11,10 +19,12 @@ import BusinessIcon from "@mui/icons-material/Business";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export const Address = (props) => {
+  const [open, setOpen] = useState(false);
+
   const addresses = props.address;
-  const setAddressSummary=props.setAddressSummary;
-  const setOrderStep=props.setOrderStep;
-  const setAddressStep=props.setAddressStep;
+  const setAddressSummary = props.setAddressSummary;
+  const setOrderStep = props.setOrderStep;
+  const setAddressStep = props.setAddressStep;
 
   const [checked, setChecked] = useState(false);
   const [active, setActive] = useState(false);
@@ -36,7 +46,6 @@ export const Address = (props) => {
     setAddressStep(false);
     setOrderStep(true);
   };
-
 
   return (
     <>
@@ -80,7 +89,13 @@ export const Address = (props) => {
               </Box>
               {address.selected ? (
                 <Box pt={1} pl={1} pr={1} sx={{ marginLeft: "auto" }}>
-                  <EditIcon fontSize="inherit" />
+                  <EditIcon
+                    fontSize="small"
+                    sx={{ color: "black" }}
+                    onClick={() => setOpen(true)}
+                    onClose={() => setOpen(false)}
+                  />
+                  <AddressModal open={open} close={() => setOpen(false)} data={address}/>
                 </Box>
               ) : (
                 <></>

@@ -72,6 +72,13 @@ export const CheckoutPage = (props) => {
 
   console.log(addressSummary);
 
+  const backToAddress = () => {
+    setAddressStep(true);
+    setOrderStep(false);
+    setPaymentStep(false);
+    setAddressSummary();
+  };
+
   useEffect(() => {
     setCartItems(cart.cartItems);
   }, [cart.cartItems]);
@@ -360,11 +367,16 @@ export const CheckoutPage = (props) => {
                             </Box>
                           )}
                           {addressSummary && orderStep && (
-                            <Box sx={{ marginLeft: "auto" }}>
+                            <Box sx={{ marginLeft: "auto", cursor: "pointer" }}>
                               <Typography
                                 pt={1}
                                 pl={1}
-                                sx={{ fontSize: "12px", color: "#a9812d", fontWeight: 600 }}
+                                sx={{
+                                  fontSize: "12px",
+                                  color: "#a9812d",
+                                  fontWeight: 600,
+                                }}
+                                onClick={backToAddress}
                               >
                                 Order will deliver to {addressSummary.name},{" "}
                                 {addressSummary.mobileNumber}
@@ -458,33 +470,3 @@ export const CheckoutPage = (props) => {
     </Layout>
   );
 };
-
-{
-  /* <Box p={2} sx={{ textAlign: "center", display: "flex" }}>
-                    <Button
-                      sx={{
-                        color: "white",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                        marginRight: "5px",
-                        marginLeft: "auto",
-                        padding: "10px 50px 10px 50px",
-                        backgroundColor: "rgb(169 129 45)",
-                        "&:hover": {
-                          color: "white",
-                          backgroundColor: "rgb(169 129 45)",
-                        },
-                        "&:active": {
-                          color: "white",
-                          backgroundColor: "rgb(169 129 45)",
-                        },
-                        "&:focus": {
-                          color: "white",
-                          backgroundColor: "rgb(169 129 45)",
-                        },
-                      }}
-                    >
-                      Place order
-                    </Button>
-                  </Box> */
-}

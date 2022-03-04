@@ -41,17 +41,20 @@ const types = [
 ];
 
 export const AddressModal = (props) => {
-  const [name, setName] = useState();
-  const [mobileNumber, setMobileNumber] = useState();
-  const [pin, setPin] = useState();
-  const [locality, setLocality] = useState();
-  const [area, setArea] = useState();
-  const [city, setCity] = useState();
-  const [type, setType] = React.useState("Home");
+  const data = props.data ? props.data : null;
+  console.log(data);
+  const [name, setName] = useState(data ? data.name : "");
+  const [mobileNumber, setMobileNumber] = useState(
+    data ? data.mobileNumber : ""
+  );
+  const [pin, setPin] = useState(data ? data.pinCode : "");
+  const [locality, setLocality] = useState(data ? data.locality : "");
+  const [area, setArea] = useState(data ? data.address : "");
+  const [city, setCity] = useState(data ? data.cityDistrictTown : "");
+  const [type, setType] = React.useState(data ? data.addressType : "Home");
 
   const state = "West Bengal";
   const dispatch = useDispatch();
-  
 
   const handleChange = (event) => {
     setType(event.target.value);
@@ -71,9 +74,11 @@ export const AddressModal = (props) => {
           state,
         },
       };
-      dispatch(createAddress(payload))
-        .then(props.close())
-        .then(window.location.reload());
+      if (data) {
+        payload.address._id = data._id;
+      }
+      //console.log((payload));
+      dispatch(createAddress(payload)).then(props.close());
       setName();
       setMobileNumber();
       setPin();
@@ -81,6 +86,7 @@ export const AddressModal = (props) => {
       setCity();
       setArea();
       setType("Home");
+      setTimeout(() => window.location.reload(), 1000);
     } else {
       alert("Fill all mandatory fields");
     }
