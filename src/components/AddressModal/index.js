@@ -7,7 +7,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { createAddress } from "../../actions/addressActions";
 
 /**
  * @author
@@ -25,7 +29,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const currencies = [
+const types = [
   {
     value: "Home",
     label: "Home (All Day Delivery)",
@@ -37,9 +41,49 @@ const currencies = [
 ];
 
 export const AddressModal = (props) => {
-  const [currency, setCurrency] = React.useState("Home");
+  const [name, setName] = useState();
+  const [mobileNumber, setMobileNumber] = useState();
+  const [pin, setPin] = useState();
+  const [locality, setLocality] = useState();
+  const [area, setArea] = useState();
+  const [city, setCity] = useState();
+  const [type, setType] = React.useState("Home");
+
+  const state = "West Bengal";
+  const dispatch = useDispatch();
+  
+
   const handleChange = (event) => {
-    setCurrency(event.target.value);
+    setType(event.target.value);
+  };
+
+  const addAddress = () => {
+    if (name && mobileNumber && pin && locality && area && city && type) {
+      const payload = {
+        address: {
+          name,
+          mobileNumber,
+          pinCode: pin,
+          locality,
+          address: area,
+          cityDistrictTown: city,
+          addressType: type,
+          state,
+        },
+      };
+      dispatch(createAddress(payload))
+        .then(props.close())
+        .then(window.location.reload());
+      setName();
+      setMobileNumber();
+      setPin();
+      setLocality();
+      setCity();
+      setArea();
+      setType("Home");
+    } else {
+      alert("Fill all mandatory fields");
+    }
   };
   return (
     <Modal
@@ -58,6 +102,8 @@ export const AddressModal = (props) => {
                 label="Name"
                 variant="outlined"
                 color="secondary"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
@@ -67,6 +113,8 @@ export const AddressModal = (props) => {
                 label="Mobile Number"
                 variant="outlined"
                 color="secondary"
+                value={mobileNumber}
+                onChange={(e) => setMobileNumber(e.target.value)}
               />
             </Grid>
 
@@ -77,6 +125,8 @@ export const AddressModal = (props) => {
                 label="Pin Code"
                 variant="outlined"
                 color="secondary"
+                value={pin}
+                onChange={(e) => setPin(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
@@ -86,6 +136,8 @@ export const AddressModal = (props) => {
                 label="Locality"
                 variant="outlined"
                 color="secondary"
+                value={locality}
+                onChange={(e) => setLocality(e.target.value)}
               />
             </Grid>
           </Grid>
@@ -98,6 +150,8 @@ export const AddressModal = (props) => {
                 multiline
                 rows={4}
                 color="secondary"
+                value={area}
+                onChange={(e) => setArea(e.target.value)}
               />
             </Grid>
           </Grid>
@@ -110,6 +164,8 @@ export const AddressModal = (props) => {
                 label="City/District/Town"
                 variant="outlined"
                 color="secondary"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
@@ -131,11 +187,11 @@ export const AddressModal = (props) => {
                 id="outlined-select-currency"
                 select
                 label="Address Type"
-                value={currency}
+                value={type}
                 onChange={handleChange}
                 color="secondary"
               >
-                {currencies.map((option) => (
+                {types.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -167,6 +223,7 @@ export const AddressModal = (props) => {
                 backgroundColor: "#a9812d",
               },
             }}
+            onClick={addAddress}
           >
             Save & Deliver here
           </Button>

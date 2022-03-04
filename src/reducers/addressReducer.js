@@ -30,6 +30,27 @@ export default (state = initState, action) => {
         error: action.payload.error,
       };
       break;
+
+    case addressConstants.ADD_ADDRESS_REQUEST:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case addressConstants.ADD_ADDRESS_SUCCESS:
+      state = {
+        ...state,
+        address: action.payload.address,
+        loading: false,
+      };
+      break;
+    case addressConstants.ADD_ADDRESS_FAILURE:
+      state = {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+      break;
   }
   return state;
 };
