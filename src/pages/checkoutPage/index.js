@@ -27,6 +27,7 @@ import {
 } from "../../actions/cartActions";
 import { getAddress } from "../../actions/addressActions";
 import { signin } from "../../actions/authActions";
+import { addOrder } from "../../actions/orderActions";
 /**
  * @author
  * @function CheckoutPage
@@ -135,8 +136,28 @@ export const CheckoutPage = (props) => {
     }
   };
 
+  const totalAmount = Object.keys(cart.cartItems).reduce((totalPrice, key) => {
+    const { price, qty } = cart.cartItems[key];
+    return totalPrice + price * qty;
+  }, 0);
+
+  const orderItems = Object.keys(cart.cartItems).map((key) => ({
+    productId: key,
+    sellerId: cart.cartItems[key].seller,
+    payablePrice: cart.cartItems[key].price,
+    purchasedQty: cart.cartItems[key].qty,
+  }));
+
+  const order = {
+    addressId: addressSummary ? addressSummary._id : null,
+    totalAmount: totalAmount,
+    items: orderItems,
+    paymentStatus: "pending",
+    paymentType: "cod",
+  };
+
   const placeOrder = () => {
-    alert("place order");
+    dispatch(addOrder(order));
   };
 
   return (

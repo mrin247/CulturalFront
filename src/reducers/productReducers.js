@@ -58,67 +58,6 @@ export default (state = initState, action) => {
         loading: false,
       };
       break;
-
-    // case productConstants.RESET_REQUEST:
-    //   state = {
-    //     ...state,
-    //   };
-    //   break;
-    // case productConstants.RESET_SUCCESS:
-    //   state = {
-    //     ...state,
-    //     message: "Password Reset Successfully",
-    //   };
-    //   break;
-    // case productConstants.RESET_FAILURE:
-    //   state = {
-    //     ...state,
-    //     error: action.payload.error,
-    //   };
-    //   break;
-
-    // case productConstants.LOGIN_REQUEST:
-    //   state = {
-    //     ...state,
-    //     authenticating: true,
-    //   };
-    //   break;
-    // case productConstants.LOGIN_SUCCESS:
-    //   state = {
-    //     ...state,
-    //     user: action.payload.user,
-    //     token: action.payload.token,
-    //     authenticate: true,
-    //     authenticating: false,
-    //   };
-    //   break;
-    // case productConstants.LOGIN_FAILURE:
-    //   state = {
-    //     ...state,
-    //     error: action.payload.error,
-    //     authenticate: false,
-    //     authenticating: false,
-    //   };
-    //   break;
-
-    // case productConstants.LOGOUT_REQUEST:
-    //   state = {
-    //     ...state,
-    //     loading: true,
-    //   };
-    //   break;
-    // case productConstants.LOGOUT_SUCCESS:
-    //   state = {
-    //     ...initState,
-    //   };
-    //   break;
-    // case productConstants.LOGOUT_FAILURE:
-    //   state = {
-    //     ...state,
-    //     error: action.payload.error,
-    //     loading: false,
-    //   };
-    //   break;
   }
 
   return state;
