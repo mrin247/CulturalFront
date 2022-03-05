@@ -149,9 +149,8 @@ export const CardProduct = (props) => {
               mb={1}
               ml={3}
             >
-              {location.pathname === "/cart" ? (
-                <StyledButton>Save for later</StyledButton>
-              ) : null}
+              <StyledButton>Save for later</StyledButton>
+
               <StyledButton
                 onClick={() => props.onRemoveCartItem(props.cartItem._id)}
               >

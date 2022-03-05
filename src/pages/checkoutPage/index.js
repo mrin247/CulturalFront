@@ -77,6 +77,20 @@ export const CheckoutPage = (props) => {
     setOrderStep(false);
     setPaymentStep(false);
     setAddressSummary();
+    setOrderSummary();
+  };
+
+  const backToOrder = () => {
+    setOrderStep(true);
+    setPaymentStep(false);
+
+    setOrderSummary();
+  };
+
+  const confirmOrder = () => {
+    setOrderSummary(Object.keys(cartItems).length);
+    setOrderStep(false);
+    setPaymentStep(true);
   };
 
   useEffect(() => {
@@ -119,6 +133,10 @@ export const CheckoutPage = (props) => {
     } else {
       alert("Please type your email & password");
     }
+  };
+
+  const placeOrder = () => {
+    alert("place order");
   };
 
   return (
@@ -366,7 +384,7 @@ export const CheckoutPage = (props) => {
                               />
                             </Box>
                           )}
-                          {addressSummary && orderStep && (
+                          {addressSummary && !addressStep && (
                             <Box sx={{ marginLeft: "auto", cursor: "pointer" }}>
                               <Typography
                                 pt={1}
@@ -406,38 +424,64 @@ export const CheckoutPage = (props) => {
                 <Grid item xs={12}>
                   <Paper elevation={3}>
                     <Box sx={{ backgroundColor: "#f1f3f6" }}>
-                      <Box sx={{ display: "flex", color: "black" }} p={2}>
-                        <Typography
-                          sx={{ border: "1px solid black" }}
-                          pl={1}
-                          pr={1}
+                      <Box p={2}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            color: "black",
+                            textAlign: "center",
+                          }}
                         >
-                          3
-                        </Typography>
-                        <Typography pl={2}>ORDER SUMMARY</Typography>
-                      </Box>
-                      {orderStep && (
-                        <Box>
+                          <Typography
+                            sx={{ border: "1px solid black" }}
+                            pl={1}
+                            pr={1}
+                          >
+                            3
+                          </Typography>
+                          <Typography pl={2}>Order Summary</Typography>
+
+                          {!orderStep && orderSummary && (
+                            <Box sx={{ marginLeft: "auto", cursor: "pointer" }}>
+                              <Typography
+                                pt={1}
+                                pl={1}
+                                sx={{
+                                  fontSize: "12px",
+                                  color: "#a9812d",
+                                  fontWeight: 600,
+                                }}
+                                onClick={backToOrder}
+                              >
+                                {orderSummary} item
+                              </Typography>
+                            </Box>
+                          )}
+                        </Box>
+                        {orderStep && (
                           <Box>
-                            {Object.keys(cartItems).map((key, index) => (
-                              <CardProduct
-                                key={index}
-                                cartItem={cartItems[key]}
-                                onQuantityInc={onQuantityIncrement}
-                                onQuantityDec={onQuantityDecrement}
-                                onRemoveCartItem={onRemoveCartItem}
-                              />
-                            ))}
-                          </Box>
-                          <Box sx={{ display: "flex" }}>
-                            <Box sx={{ marginLeft: "auto" }} p={2}>
-                              <StyledContinueButton>
-                                Continue
-                              </StyledContinueButton>
+                            <Box>
+                              {Object.keys(cartItems).map((key, index) => (
+                                <CardProduct
+                                  key={index}
+                                  cartItem={cartItems[key]}
+                                  onQuantityInc={onQuantityIncrement}
+                                  onQuantityDec={onQuantityDecrement}
+                                  onRemoveCartItem={onRemoveCartItem}
+                                />
+                              ))}
+                            </Box>
+                            <Box sx={{ display: "flex" }}>
+                              <Box sx={{ marginLeft: "auto" }} p={2}>
+                                <StyledContinueButton onClick={confirmOrder}>
+                                  Continue
+                                </StyledContinueButton>
+                              </Box>
                             </Box>
                           </Box>
-                        </Box>
-                      )}
+                        )}
+                        <Box></Box>
+                      </Box>
                     </Box>
                   </Paper>
                 </Grid>
@@ -455,6 +499,19 @@ export const CheckoutPage = (props) => {
                         </Typography>
                         <Typography pl={2}>PAYMENT OPTIONS</Typography>
                       </Box>
+                      {paymentStep && !addressStep && !orderStep && (
+                        <Box>
+                          <Box>COD</Box>
+                          <Divider />
+                          <Box sx={{ display: "flex" }}>
+                            <Box sx={{ marginLeft: "auto" }} p={2}>
+                              <StyledContinueButton onClick={placeOrder}>
+                                PLACE ORDER
+                              </StyledContinueButton>
+                            </Box>
+                          </Box>
+                        </Box>
+                      )}
                     </Box>
                   </Paper>
                 </Grid>
@@ -470,3 +527,20 @@ export const CheckoutPage = (props) => {
     </Layout>
   );
 };
+
+// {!orderStep && orderSummary && (
+//   <Box sx={{ marginLeft: "auto", cursor: "pointer" }}>
+//   <Typography
+//     pt={1}
+//     pl={1}
+//     sx={{
+//       fontSize: "12px",
+//       color: "#a9812d",
+//       fontWeight: 600,
+//     }}
+//     //onClick={backToAddress}
+//   >
+//     {orderSummary} item
+//   </Typography>
+// </Box>
+// )}
