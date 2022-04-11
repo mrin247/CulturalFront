@@ -144,7 +144,7 @@ export const CheckoutPage = (props) => {
   const orderItems = Object.keys(cart.cartItems).map((key) => ({
     productId: key,
     sellerId: cart.cartItems[key].seller,
-    payablePrice: cart.cartItems[key].price,
+    payablePrice: cart.cartItems[key].price * cart.cartItems[key].qty,
     purchasedQty: cart.cartItems[key].qty,
   }));
 
@@ -158,6 +158,21 @@ export const CheckoutPage = (props) => {
 
   const placeOrder = () => {
     dispatch(addOrder(order));
+  };
+
+  console.log(cart.cartItems);
+  let cartLength = 0;
+  let totalPrice = 0;
+  Object.keys(cartItems).map((key, index) => {
+    totalPrice = totalPrice + cartItems[key].price * cartItems[key].qty;
+  });
+
+  cartLength = Object.keys(cartItems).length;
+
+  const cartSumary = {
+    cartLength,
+    totalPrice: totalAmount,
+    discount: 0,
   };
 
   return (
@@ -540,7 +555,7 @@ export const CheckoutPage = (props) => {
             </Grid>
 
             <Grid item xs={4}>
-              <SideSummary />
+              <SideSummary cartSumary={cartSumary} />
             </Grid>
           </Grid>
         </Box>

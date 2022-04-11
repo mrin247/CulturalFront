@@ -90,7 +90,7 @@ export const SideSummary = (props) => {
             mb={1}
           >
             <Typography sx={{ fontSize: 16, color: "green" }}>
-              You will save reward on every order
+              You will receive reward on every order
             </Typography>
           </Box>
           <Divider />
