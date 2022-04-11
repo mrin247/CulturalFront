@@ -53,7 +53,20 @@ export const CartPage = (props) => {
     dispatch(removeCartItem({ productId: _id }));
   };
 
-  const cartLength = Object.keys(cartItems).length;
+  console.log(cart.cartItems);
+  let cartLength = 0;
+  let totalPrice = 0;
+  Object.keys(cartItems).map((key, index) => {
+    totalPrice = totalPrice + cartItems[key].price * cartItems[key].qty;
+  });
+
+  cartLength = Object.keys(cartItems).length;
+
+  const cartSumary = {
+    cartLength,
+    totalPrice,
+    discount: 0,
+  };
 
   return (
     <Layout>
@@ -129,7 +142,7 @@ export const CartPage = (props) => {
               </Paper>
             </Grid>
             <Grid item xs={4}>
-              <SideSummary />
+              <SideSummary cartSumary={cartSumary} />
             </Grid>
           </Grid>
         </Box>

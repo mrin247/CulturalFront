@@ -10,6 +10,8 @@ import { Box, Paper } from "@mui/material";
  **/
 
 export const SideSummary = (props) => {
+  const cartSumary = props.cartSumary;
+  console.log(cartSumary);
   return (
     <Box position={"fixed"} sx={{ width: "50vh" }}>
       <Paper elevation={3}>
@@ -35,8 +37,8 @@ export const SideSummary = (props) => {
             mt={1}
             mb={2}
           >
-            <Typography>Price (2 items)</Typography>
-            <Typography>45478</Typography>
+            <Typography>Price ({cartSumary.cartLength} items)</Typography>
+            <Typography>{cartSumary.totalPrice}</Typography>
           </Box>
           <Box
             sx={{ display: "flex", justifyContent: "space-between" }}
@@ -46,7 +48,7 @@ export const SideSummary = (props) => {
             mb={2}
           >
             <Typography>Discount</Typography>
-            <Typography>-4540</Typography>
+            <Typography>{cartSumary.discount}</Typography>
           </Box>
           <Box
             sx={{ display: "flex", justifyContent: "space-between" }}
@@ -74,7 +76,7 @@ export const SideSummary = (props) => {
                 sx={{ fontSize: 25, fontWeight: 600 }}
               />
               <Typography sx={{ fontSize: 16, fontWeight: 600 }}>
-                4540
+                {cartSumary.totalPrice}
               </Typography>
             </Box>
           </Box>
@@ -88,7 +90,7 @@ export const SideSummary = (props) => {
             mb={1}
           >
             <Typography sx={{ fontSize: 16, color: "green" }}>
-              You will save ₹6,075 on this order
+              You will save reward on every order
             </Typography>
           </Box>
           <Divider />
