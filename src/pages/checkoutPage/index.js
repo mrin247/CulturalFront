@@ -3,12 +3,17 @@ import {
   Button,
   Container,
   Divider,
+  FormControl,
+  FormControlLabel,
   Grid,
   Paper,
+  Radio,
+  RadioGroup,
   TextField,
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/styles";
+import axios from "../../utils/axios";
 import React, { useEffect, useState } from "react";
 import { Layout } from "../../components/Layout";
 import { SideSummary } from "../../components/SideSummary";
@@ -27,7 +32,7 @@ import {
 } from "../../actions/cartActions";
 import { getAddress } from "../../actions/addressActions";
 import { signin } from "../../actions/authActions";
-import { addOrder } from "../../actions/orderActions";
+import { addOrder, addPaidOrder } from "../../actions/orderActions";
 /**
  * @author
  * @function CheckoutPage
@@ -70,6 +75,17 @@ export const CheckoutPage = (props) => {
   const [addressSummary, setAddressSummary] = useState();
   const [orderSummary, setOrderSummary] = useState();
   const [paymentSummary, setPaymentSummary] = useState();
+
+  const [value, setValue] = React.useState("COD");
+
+  const [payment, setPayment] = React.useState(false);
+  const [sample_orderId, setSample_orderId] = React.useState("");
+  const [paymentId, setPaymentId] = React.useState("");
+  const [signature, setSignature] = React.useState("");
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
 
   console.log(addressSummary);
 
@@ -153,11 +169,65 @@ export const CheckoutPage = (props) => {
     totalAmount: totalAmount,
     items: orderItems,
     paymentStatus: "pending",
-    paymentType: "cod",
+    paymentType: "COD",
   };
 
-  const placeOrder = () => {
-    dispatch(addOrder(order));
+  const placeOrder = async () => {
+    if (value === "EPAY") {
+      const sample_orderId = "62550f33f7a7608fe984f1ff";
+      order.paymentType = "EPAY";
+      //order.paymentStatus = "completed";
+       console.log(order);
+       dispatch(addPaidOrder(order));
+      // const res = await axios.get("/client/order/createPaymentOrder", order);
+      // console.log(res);
+      // if (res.status !== 200) {
+      //   return;
+      // }
+
+      // const options = {
+      //   key: "rzp_test_tHI8HRFAFNYymj", // Enter the Key ID generated from the Dashboard
+      //   amount: res.data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      //   currency: "INR",
+      //   name: "Mrin",
+      //   description: "Test Transaction",
+      //   image: "https://example.com/your_logo",
+      //   order_id: res.data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      //   handler: function (response) {
+      //     // alert(response.razorpay_payment_id);
+      //     // alert(response.razorpay_order_id);
+      //     // alert(response.razorpay_signature);
+      //     setPaymentId(response.razorpay_payment_id);
+      //     setSample_orderId(response.razorpay_order_id);
+      //     setSignature(response.razorpay_signature);
+      //     setPayment(true);
+      //   },
+      //   prefill: {
+      //     name: "Gaurav Kumar",
+      //     email: "gaurav.kumar@example.com",
+      //     contact: "9999999999",
+      //   },
+      //   notes: {
+      //     address: "Razorpay Corporate Office",
+      //   },
+      //   theme: {
+      //     color: "#3399cc",
+      //   },
+      // };
+      // const rzp1 = new window.Razorpay(options);
+      // rzp1.open();
+      // rzp1.on("payment.failed", function (response) {
+      //   alert(response.error.code);
+      //   alert(response.error.description);
+      //   alert(response.error.source);
+      //   alert(response.error.step);
+      //   alert(response.error.reason);
+      //   alert(response.error.metadata.order_id);
+      //   alert(response.error.metadata.payment_id);
+      // });
+      alert(sample_orderId);
+    }
+    //dispatch(addOrder(order));
   };
 
   console.log(cart.cartItems);
@@ -537,7 +607,29 @@ export const CheckoutPage = (props) => {
                       </Box>
                       {paymentStep && !addressStep && !orderStep && (
                         <Box>
-                          <Box>COD</Box>
+                          <Box sx={{ display: "flex" }}>
+                            <Box>
+                              <FormControl>
+                                <RadioGroup
+                                  aria-labelledby="demo-controlled-radio-buttons-group"
+                                  name="controlled-radio-buttons-group"
+                                  value={value}
+                                  onChange={handleChange}
+                                >
+                                  <FormControlLabel
+                                    value="COD"
+                                    control={<Radio />}
+                                    label="Cash On Delivery"
+                                  />
+                                  <FormControlLabel
+                                    value="EPAY"
+                                    control={<Radio />}
+                                    label="Online Payment"
+                                  />
+                                </RadioGroup>
+                              </FormControl>
+                            </Box>
+                          </Box>
                           <Divider />
                           <Box sx={{ display: "flex" }}>
                             <Box sx={{ marginLeft: "auto" }} p={2}>
@@ -555,7 +647,14 @@ export const CheckoutPage = (props) => {
             </Grid>
 
             <Grid item xs={4}>
-              <SideSummary cartSumary={cartSumary} />
+              {/* <SideSummary cartSumary={cartSumary} /> */}
+              {payment && (
+                <Box>
+                  <Typography>PaymentId :{paymentId}</Typography>
+                  <Typography>sample_orderId : {sample_orderId}</Typography>
+                  <Typography>signature : {signature}</Typography>
+                </Box>
+              )}
             </Grid>
           </Grid>
         </Box>
