@@ -29,13 +29,16 @@ export const addOrder = (order) => {
     }
   };
 };
+ let razorpayResponse;
+
 
 export const addPaidOrder = (order) => {
   return async (dispatch) => {
-    
     try {
       console.log(order);
-      const res = await axios.get(`/client/order/createPaymentOrder/${order.totalAmount}`);
+      const res = await axios.get(
+        `/client/order/createPaymentOrder/${order.totalAmount}`
+      );
       console.log(res);
       if (res.status !== 200) {
         return;
@@ -50,13 +53,11 @@ export const addPaidOrder = (order) => {
         image: "https://example.com/your_logo",
         order_id: res.data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         handler: function (response) {
-          // alert(response.razorpay_payment_id);
-          // alert(response.razorpay_order_id);
-          // alert(response.razorpay_signature);
-          // setPaymentId(response.razorpay_payment_id);
-          // setSample_orderId(response.razorpay_order_id);
-          // setSignature(response.razorpay_signature);
-          // setPayment(true);
+          razorpayResponse = {
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature,
+          };
         },
         prefill: {
           name: "Gaurav Kumar",
@@ -72,6 +73,7 @@ export const addPaidOrder = (order) => {
       };
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
+      
       rzp1.on("payment.failed", function (response) {
         alert(response.error.code);
         alert(response.error.description);

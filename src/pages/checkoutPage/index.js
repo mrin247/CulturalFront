@@ -32,7 +32,7 @@ import {
 } from "../../actions/cartActions";
 import { getAddress } from "../../actions/addressActions";
 import { signin } from "../../actions/authActions";
-import { addOrder, addPaidOrder } from "../../actions/orderActions";
+import { addOrder, addPaidOrder, verifyOrder } from "../../actions/orderActions";
 /**
  * @author
  * @function CheckoutPage
@@ -174,58 +174,11 @@ export const CheckoutPage = (props) => {
 
   const placeOrder = async () => {
     if (value === "EPAY") {
-      const sample_orderId = "62550f33f7a7608fe984f1ff";
       order.paymentType = "EPAY";
-      //order.paymentStatus = "completed";
-       console.log(order);
-       dispatch(addPaidOrder(order));
-      // const res = await axios.get("/client/order/createPaymentOrder", order);
-      // console.log(res);
-      // if (res.status !== 200) {
-      //   return;
-      // }
 
-      // const options = {
-      //   key: "rzp_test_tHI8HRFAFNYymj", // Enter the Key ID generated from the Dashboard
-      //   amount: res.data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-      //   currency: "INR",
-      //   name: "Mrin",
-      //   description: "Test Transaction",
-      //   image: "https://example.com/your_logo",
-      //   order_id: res.data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      //   handler: function (response) {
-      //     // alert(response.razorpay_payment_id);
-      //     // alert(response.razorpay_order_id);
-      //     // alert(response.razorpay_signature);
-      //     setPaymentId(response.razorpay_payment_id);
-      //     setSample_orderId(response.razorpay_order_id);
-      //     setSignature(response.razorpay_signature);
-      //     setPayment(true);
-      //   },
-      //   prefill: {
-      //     name: "Gaurav Kumar",
-      //     email: "gaurav.kumar@example.com",
-      //     contact: "9999999999",
-      //   },
-      //   notes: {
-      //     address: "Razorpay Corporate Office",
-      //   },
-      //   theme: {
-      //     color: "#3399cc",
-      //   },
-      // };
-      // const rzp1 = new window.Razorpay(options);
-      // rzp1.open();
-      // rzp1.on("payment.failed", function (response) {
-      //   alert(response.error.code);
-      //   alert(response.error.description);
-      //   alert(response.error.source);
-      //   alert(response.error.step);
-      //   alert(response.error.reason);
-      //   alert(response.error.metadata.order_id);
-      //   alert(response.error.metadata.payment_id);
-      // });
-      alert(sample_orderId);
+      console.log(order);
+      dispatch(addPaidOrder(order))
+      
     }
     //dispatch(addOrder(order));
   };
