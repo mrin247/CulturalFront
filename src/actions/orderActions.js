@@ -36,8 +36,8 @@ export const addPaidOrder = (order) => {
   return async (dispatch) => {
     try {
       console.log(order);
-      const res = await axios.get(
-        `/client/order/createPaymentOrder/${order.totalAmount}`
+      const res = await axios.post(
+        `/client/order/createPaymentOrder/${order.totalAmount}`,order
       );
       console.log(res);
       if (res.status !== 200) {

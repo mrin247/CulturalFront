@@ -32,7 +32,11 @@ import {
 } from "../../actions/cartActions";
 import { getAddress } from "../../actions/addressActions";
 import { signin } from "../../actions/authActions";
-import { addOrder, addPaidOrder, verifyOrder } from "../../actions/orderActions";
+import {
+  addOrder,
+  addPaidOrder,
+  verifyOrder,
+} from "../../actions/orderActions";
 /**
  * @author
  * @function CheckoutPage
@@ -170,17 +174,18 @@ export const CheckoutPage = (props) => {
     items: orderItems,
     paymentStatus: "pending",
     paymentType: "COD",
+    paymentId: "",
   };
 
   const placeOrder = async () => {
     if (value === "EPAY") {
       order.paymentType = "EPAY";
+      order.paymentStatus = "inProcess";
 
       console.log(order);
-      dispatch(addPaidOrder(order))
-      
+      dispatch(addPaidOrder(order));
     }
-    //dispatch(addOrder(order));
+    else dispatch(addOrder(order));
   };
 
   console.log(cart.cartItems);
@@ -600,14 +605,8 @@ export const CheckoutPage = (props) => {
             </Grid>
 
             <Grid item xs={4}>
-              {/* <SideSummary cartSumary={cartSumary} /> */}
-              {payment && (
-                <Box>
-                  <Typography>PaymentId :{paymentId}</Typography>
-                  <Typography>sample_orderId : {sample_orderId}</Typography>
-                  <Typography>signature : {signature}</Typography>
-                </Box>
-              )}
+               <SideSummary cartSumary={cartSumary} />
+              
             </Grid>
           </Grid>
         </Box>
