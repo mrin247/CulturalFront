@@ -1,6 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React from "react";
+import { Carousel } from "../../components/Carousel";
 import { Layout } from "../../components/Layout";
+import { MedHome } from "../../components/Medicine/med-home";
+import { MedLayout } from "../../components/Medicine/med-layout";
+import { MedNav } from "../../components/Medicine/med-nav";
 
 /**
  * @author
@@ -9,8 +13,8 @@ import { Layout } from "../../components/Layout";
 
 export const MedicinePage = (props) => {
   return (
-    <Layout>
-      <Box mt={15}>Medicine</Box>
-    </Layout>
+    <MedLayout>
+      <MedHome/>
+    </MedLayout>
   );
 };
