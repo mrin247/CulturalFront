@@ -7,8 +7,8 @@ import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { Badge, Button, Stack } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
-import {useSelector} from "react-redux"
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 //ICONS
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
@@ -90,15 +90,24 @@ const StyledLoginButton = styled(Button)(({ theme }) => ({
 export const Header = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
+
   const [open, setOpen] = React.useState(false);
-  const auth=useSelector(state=>state.auth)
+  const [keyword, setKeyword] = React.useState(searchParams.get("keyword"));
+  const auth = useSelector((state) => state.auth);
   const openDialog = () => {
     setOpen(true);
   };
   const closeDialog = () => {
     setOpen(false);
   };
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      navigate(`/search/?keyword=${keyword}`);
+    }
+  };
   console.log(auth);
+
   return (
     <AppBar
       position="fixed"
@@ -125,8 +134,11 @@ export const Header = (props) => {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
-                placeholder="Search for Bengal"
+                placeholder="Search for Varanasi"
+                value={keyword}
                 inputProps={{ "aria-label": "search" }}
+                onChange={(e) => setKeyword(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
             </Search>
             <Stack spacing={2} direction="row">

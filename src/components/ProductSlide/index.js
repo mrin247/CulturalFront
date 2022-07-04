@@ -5,7 +5,8 @@ import { styled } from "@mui/system";
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { products } from "../../Data/data";
+import { useNavigate } from "react-router-dom";
+//import { products } from "../../Data/data";
 
 /**
  * @author
@@ -38,7 +39,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 const useStyle = makeStyles({
   image: {
-    width: "auto",
+    width: 150,
     height: 150,
   },
   text: {
@@ -48,6 +49,12 @@ const useStyle = makeStyles({
 });
 
 export const ProductSlide = (props) => {
+  const navigate = useNavigate();
+  const products = props.products;
+  if (products) {
+    console.log(products);
+  }
+
   const classes = useStyle();
   return (
     <Box sx={{ marginTop: 1, background: "#FFFFFF" }}>
@@ -92,20 +99,27 @@ export const ProductSlide = (props) => {
           <Box
             textAlign="center"
             style={{ padding: "25px 15px", cursor: "pointer" }}
-            onClick={() => alert(product.title.shortTitle)}
+            onClick={() => navigate(`/p/${product._id}`)}
           >
-            <img src={product.url} className={classes.image} />
+            <img
+              src={
+                product.productPhotos.length > 1
+                  ? product.productPhotos[0].img
+                  : "https://jubilantconsumer.com/wp-content/themes/jubilant/assets/img/product.png"
+              }
+              className={classes.image}
+            />
             <Typography className={classes.text} style={{ fontWeight: 600 }}>
-              {product.title.shortTitle}
+              {product.name}
             </Typography>
             <Typography className={classes.text} style={{ color: "green" }}>
-              {product.discount}
+              {product.price}
             </Typography>
             <Typography
               className={classes.text}
               style={{ color: "#212121", opacity: ".6" }}
             >
-              {product.tagline}
+              {product.category}
             </Typography>
           </Box>
         ))}

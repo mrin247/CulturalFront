@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
 import { Carousel } from "../../components/Carousel";
@@ -9,7 +9,9 @@ import { StoreSlide } from "../../components/StoreSlide";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../../actions/productActions";
 import { navData } from "../../Data/data";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import { ProductCard } from "../../components/Product-Card";
+import { NavbarProduct } from "../../components/Navbar-Product";
 
 /**
  * @author
@@ -22,16 +24,30 @@ const useStyle = makeStyles({
   },
 });
 
-export const HomePage = (props) => {
+export const SearchPage = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.product.products);
+  const [searchParams] = useSearchParams();
+  const key = searchParams.get("keyword");
 
   React.useEffect(() => {
     dispatch(getAllProducts());
   }, []);
 
   console.log(allProducts);
+
+  const products = allProducts.filter((product) => {
+    if (
+      product.name.toLowerCase().includes(key.toLowerCase()) ||
+      product.category.toLowerCase().includes(key.toLowerCase()) ||
+      product.description.toLowerCase().includes(key.toLowerCase())
+    ) {
+      return product;
+    }
+  });
+
+  console.log(products);
 
   const styles = useStyle();
   const viewAllTopProducts = (route) => {
@@ -43,34 +59,21 @@ export const HomePage = (props) => {
   //console.log(auth);
   return (
     <Layout>
-      <NavbarHome />
-      <Box className={styles.carousel}>
-        <Carousel />
-        <ProductSlide
-          title="Top Products"
-          filter="top"
-          products={allProducts.slice(0, 5)}
-          //viewAll={() => viewAllTopProducts()}
-        />
-        <StoreSlide
-          title="Top Stores"
-          //viewAll={viewAllTopStores}
-        />
-        {navData.map((category) => {
-          const filterByCategory = (p) => {
-            console.log(p);
-            return p.category === category.text;
-          };
-          const products = allProducts.filter(filterByCategory);
-          return (
-            <ProductSlide
-              title={`Top ${category.text} Products`}
-              filter={category.route}
-              products={products.slice(0, 5)}
-              viewAll={() => viewAllTopProducts(category.route)}
-            />
-          );
-        })}
+      <NavbarProduct />
+      <Box ml={1} mr={1} mt={2}>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Box>
+              <Grid container spacing={1}>
+                {products.map((product) => (
+                  <Grid item xs={3}>
+                    <ProductCard product={product} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
     </Layout>
   );

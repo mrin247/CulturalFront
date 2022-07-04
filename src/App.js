@@ -25,6 +25,7 @@ import { TravelPage } from "./pages/travelPage";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserLoggedIn } from "./actions/authActions";
 import { updateCart } from "./actions/cartActions";
+import { SearchPage } from "./pages/searchPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ function App() {
           <Route exact path="/checkout" element={<CheckoutPage />} />
 
           <Route exact path="/" element={<HomePage />} />
+          <Route exact path="/search" element={<SearchPage />} />
           <Route exact path="/cart" element={<CartPage />} />
           <Route exact path="/artists" element={<ArtistsPage />} />
           <Route exact path="/jewelleries" element={<JewelsPage />} />
