@@ -19,6 +19,8 @@ import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
 import { Dialoge } from "../Dialog";
 import { makeStyles } from "@mui/styles";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
+
 /**
  * @author
  * @function Header
@@ -49,7 +51,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
   position: "absolute",
-  pointerEvents: "none",
+  //pointerEvents: "none",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -94,6 +96,7 @@ export const Header = (props) => {
 
   const [open, setOpen] = React.useState(false);
   const [keyword, setKeyword] = React.useState(searchParams.get("keyword"));
+
   const auth = useSelector((state) => state.auth);
   const openDialog = () => {
     setOpen(true);
@@ -106,6 +109,7 @@ export const Header = (props) => {
       navigate(`/search/?keyword=${keyword}`);
     }
   };
+
   console.log(auth);
 
   return (
@@ -133,6 +137,7 @@ export const Header = (props) => {
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
+
               <StyledInputBase
                 placeholder="Search for Varanasi"
                 value={keyword}
@@ -226,34 +231,7 @@ export const Header = (props) => {
                 />
                 Travel
               </Button>
-              <Button
-                variant="text"
-                selected={location.pathname === "/blogs" ? true : false}
-                sx={
-                  location.pathname === "/blogs"
-                    ? {
-                        textTransform: "none",
-                        color: "black",
-                        borderBottom: "1px solid",
-                        boxShadow: "none",
-                      }
-                    : {
-                        textTransform: "none",
-                        color: "#E5E4E4",
-                        "&:hover": {
-                          color: "black",
-                          borderBottom: "1px solid",
-                          boxShadow: "none",
-                        },
-                      }
-                }
-                onClick={() => navigate("/blogs")}
-              >
-                <HistoryEduIcon
-                  sx={{ justifyContent: "center", marginRight: "2px" }}
-                />
-                Blog
-              </Button>
+
               <Button
                 variant="text"
                 selected={location.pathname === "/medicines" ? true : false}
@@ -281,6 +259,34 @@ export const Header = (props) => {
                   sx={{ justifyContent: "center", marginRight: "2px" }}
                 />
                 Medicine
+              </Button>
+              <Button
+                variant="text"
+                selected={location.pathname === "/orders" ? true : false}
+                sx={
+                  location.pathname === "/orders"
+                    ? {
+                        textTransform: "none",
+                        color: "black",
+                        borderBottom: "1px solid",
+                        boxShadow: "none",
+                      }
+                    : {
+                        textTransform: "none",
+                        color: "#E5E4E4",
+                        "&:hover": {
+                          color: "black",
+                          borderBottom: "1px solid",
+                          boxShadow: "none",
+                        },
+                      }
+                }
+                onClick={() => navigate("/orders")}
+              >
+                <Inventory2Icon
+                  sx={{ justifyContent: "center", marginRight: "2px" }}
+                />
+                Orders
               </Button>
               <Button
                 variant="text"

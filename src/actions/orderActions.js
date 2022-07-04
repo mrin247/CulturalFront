@@ -1,6 +1,35 @@
 import axios from "../utils/axios";
 import { orderConstants } from "./constants";
 
+export const getOrders = () => {
+  return async (dispatch) => {
+    let res;
+    try {
+      dispatch({ type: orderConstants.GET_ORDER_REQUEST });
+      res = await axios.get("/client/order/getorders");
+      if (res.status === 200) {
+        dispatch({
+          type: orderConstants.GET_ORDER_SUCCESS,
+          payload: { orders: res.data.order },
+        });
+      } else {
+        const { error } = res.data;
+        console.log(error);
+        dispatch({
+          type: orderConstants.GET_ORDER_FAILURE,
+          payload: { error },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: orderConstants.GET_ORDER_FAILURE,
+        payload: { error },
+      });
+    }
+  };
+};
+
 export const addOrder = (order) => {
   return async (dispatch) => {
     let res;
@@ -29,15 +58,15 @@ export const addOrder = (order) => {
     }
   };
 };
- let razorpayResponse;
 
-
+let razorpayResponse;
 export const addPaidOrder = (order) => {
   return async (dispatch) => {
     try {
       console.log(order);
       const res = await axios.post(
-        `/client/order/createPaymentOrder/${order.totalAmount}`,order
+        `/client/order/createPaymentOrder/${order.totalAmount}`,
+        order
       );
       console.log(res);
       if (res.status !== 200) {
@@ -73,7 +102,7 @@ export const addPaidOrder = (order) => {
       };
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
-      
+
       rzp1.on("payment.failed", function (response) {
         alert(response.error.code);
         alert(response.error.description);

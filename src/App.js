@@ -6,7 +6,6 @@ import { Header } from "./components/Header";
 import PrivateRoute from "./components/HOC/privateRoute";
 import { ResetPassword } from "./components/Reset-Password";
 import { ArtistsPage } from "./pages/artistsPage";
-import { BlogsPage } from "./pages/blogsPage";
 import { BooksPage } from "./pages/booksPage";
 import { CartPage } from "./pages/cartPage";
 import { CheckoutPage } from "./pages/checkoutPage";
@@ -26,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isUserLoggedIn } from "./actions/authActions";
 import { updateCart } from "./actions/cartActions";
 import { SearchPage } from "./pages/searchPage";
+import { OrdersPage } from "./pages/OrdersPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ function App() {
           <Route exact path="/artists" element={<ArtistsPage />} />
           <Route exact path="/jewelleries" element={<JewelsPage />} />
           <Route exact path="/travels" element={<TravelPage />} />
-          <Route exact path="/blogs" element={<BlogsPage />} />
+          <Route exact path="/orders" element={<OrdersPage />} />
           <Route exact path="/medicines" element={<MedicinePage />} />
 
           <Route exact path="/home-needs" element={<HomeNeedsPage />} />
