@@ -52,10 +52,11 @@ export const HomePage = (props) => {
           products={allProducts.slice(0, 5)}
           //viewAll={() => viewAllTopProducts()}
         />
-        <StoreSlide
+
+        {/* <StoreSlide
           title="Top Stores"
           //viewAll={viewAllTopStores}
-        />
+        /> */}
         {navData.map((category) => {
           const filterByCategory = (p) => {
             console.log(p);

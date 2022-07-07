@@ -33,7 +33,7 @@ export const ProductCard = ({ product }) => {
         </Box>
         <Box m={1}>
           <Typography sx={{ color: "rgb(177 177 177)" }}>
-            Seller name
+            {product.createdBy.firstName}
           </Typography>
           <Typography sx={{ fontSize: "16px", fontWeight: 600 }}>
             {product.name}
