@@ -26,6 +26,7 @@ import { isUserLoggedIn } from "./actions/authActions";
 import { updateCart } from "./actions/cartActions";
 import { SearchPage } from "./pages/searchPage";
 import { OrdersPage } from "./pages/OrdersPage";
+import { AccountSettings } from "./pages/AccountPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ function App() {
           <Route exact path="/artists" element={<ArtistsPage />} />
           <Route exact path="/jewelleries" element={<JewelsPage />} />
           <Route exact path="/travels" element={<TravelPage />} />
-          <Route exact path="/orders" element={<OrdersPage />} />
+
           <Route exact path="/medicines" element={<MedicinePage />} />
 
           <Route exact path="/home-needs" element={<HomeNeedsPage />} />
@@ -65,6 +66,14 @@ function App() {
           <Route exact path="/puja-samagrhi" element={<PujaPage />} />
           <Route exact path="/toys-&-more" element={<ToysPage />} />
           <Route exact path="/p/:productId" element={<Product />} />
+
+          <Route exact path="/account" element={<PrivateRoute />}>
+            <Route exact path="/account" element={<AccountSettings />} />
+          </Route>
+
+          <Route exact path="/orders" element={<PrivateRoute />}>
+            <Route exact path="/orders" element={<OrdersPage />} />
+          </Route>
 
           <Route
             exact

@@ -6,9 +6,16 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { Badge, Button, Stack } from "@mui/material";
+import {
+  Badge,
+  Button,
+  Menu,
+  MenuItem,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 //ICONS
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
@@ -20,6 +27,11 @@ import ColorLensIcon from "@mui/icons-material/ColorLens";
 import { Dialoge } from "../Dialog";
 import { makeStyles } from "@mui/styles";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
+import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { signout } from "../../actions/authActions";
 
 /**
  * @author
@@ -74,7 +86,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const StyledLoginButton = styled(Button)(({ theme }) => ({
   textTransform: "none",
   boxShadow: "none",
-  padding: "0 30px",
+  padding: "0 15px",
   color: "#581845",
   fontSize: "16px",
   fontWeight: "600",
@@ -93,6 +105,7 @@ export const Header = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
 
   const [open, setOpen] = React.useState(false);
   const [keyword, setKeyword] = React.useState(searchParams.get("keyword"));
@@ -108,6 +121,16 @@ export const Header = (props) => {
     if (event.key === "Enter") {
       navigate(`/search/?keyword=${keyword}`);
     }
+  };
+  const goToAccount = () => {
+    //props.onClose();
+    navigate("/account");
+  };
+
+  const logout = () => {
+    //props.onClose();
+    dispatch(signout());
+    navigate("/");
   };
 
   console.log(auth);
@@ -326,7 +349,27 @@ export const Header = (props) => {
                 Cart
               </Button>
               {auth.authenticate ? (
-                <StyledLoginButton>{auth.user.firstName}</StyledLoginButton>
+                <PopupState variant="popover" popupId="demo-popup-menu">
+                  {(popupState) => (
+                    <React.Fragment>
+                      <StyledLoginButton {...bindTrigger(popupState)}>
+                        {auth.user.firstName}
+                        <KeyboardArrowDownIcon />
+                      </StyledLoginButton>
+                      <Menu {...bindMenu(popupState)}>
+                        <MenuItem onClick={goToAccount}>
+                          <ManageAccountsIcon />
+                          <Typography pl={2}> Account</Typography>
+                        </MenuItem>
+
+                        <MenuItem onClick={logout}>
+                          <LogoutIcon />
+                          <Typography pl={2}> Logout</Typography>
+                        </MenuItem>
+                      </Menu>
+                    </React.Fragment>
+                  )}
+                </PopupState>
               ) : (
                 <StyledLoginButton variant="contained" onClick={openDialog}>
                   Login

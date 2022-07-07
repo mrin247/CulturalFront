@@ -20,7 +20,7 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export const Address = (props) => {
   const [open, setOpen] = useState(false);
-
+  console.log(props.address);
   const addresses = props.address;
   const setAddressSummary = props.setAddressSummary;
   const setOrderStep = props.setOrderStep;
@@ -95,7 +95,11 @@ export const Address = (props) => {
                     onClick={() => setOpen(true)}
                     onClose={() => setOpen(false)}
                   />
-                  <AddressModal open={open} close={() => setOpen(false)} data={address}/>
+                  <AddressModal
+                    open={open}
+                    close={() => setOpen(false)}
+                    data={address}
+                  />
                 </Box>
               ) : (
                 <></>
