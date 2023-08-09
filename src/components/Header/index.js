@@ -32,6 +32,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { signout } from "../../actions/authActions";
+import titleImage from "../../images/CF-title.png";
 
 /**
  * @author
@@ -150,7 +151,7 @@ export const Header = (props) => {
           onClick={() => navigate("/")}
           //selected={location.pathname === "/" ? true : false}
         >
-          <StyledLogo src="https://www.coolgenerator.com/Data/Textdesign/202112/5c27fc32866f72a8acac2e3d45a0fe55.png" />
+          <StyledLogo src={titleImage} />
         </Box>
         {location.pathname === "/checkout" ? (
           <></>
