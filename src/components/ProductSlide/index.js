@@ -52,7 +52,7 @@ export const ProductSlide = (props) => {
   const navigate = useNavigate();
   const products = props.products;
   if (products) {
-    console.log(products);
+    console.log("here are products", products);
   }
 
   const classes = useStyle();
@@ -103,8 +103,8 @@ export const ProductSlide = (props) => {
           >
             <img
               src={
-                product.productPhotos.length > 0
-                  ? product.productPhotos[0].img
+                product[productPhotos].length > 0
+                  ? product.productPhotos[0]
                   : "https://jubilantconsumer.com/wp-content/themes/jubilant/assets/img/product.png"
               }
               className={classes.image}
