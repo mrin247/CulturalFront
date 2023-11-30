@@ -103,7 +103,7 @@ export const ProductSlide = (props) => {
           >
             <img
               src={
-                product.productPhotos.length > 1
+                product.productPhotos.length > 0
                   ? product.productPhotos[0].img
                   : "https://jubilantconsumer.com/wp-content/themes/jubilant/assets/img/product.png"
               }
